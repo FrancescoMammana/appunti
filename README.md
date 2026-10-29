@@ -1,2 +1,29 @@
 # Appunti
-un sito di appunti dove carico quello che più mi attira o Interessa in un determinato momento 
+
+Un sito di appunti dove raccolgo ciò che mi interessa in un determinato momento.
+
+Blog statico pubblicabile con **GitHub Pages + Jekyll**, senza server o build locali obbligatorie.
+
+## Struttura
+
+- `index.html` — home con elenco automatico degli articoli.
+- `_posts/YYYY-MM-DD-slug.md` — nuovi articoli Markdown.
+- `_posts/YYYY-MM-DD-slug.html` — articoli HTML interattivi.
+- `_layouts/default.html` — layout condiviso delle pagine.
+- `assets/css/style.css` — stile del blog.
+- `_config.yml` — impostazioni GitHub Pages.
+- `GUIDA-PUBBLICAZIONE.md` — guida per pubblicare dalla chat.
+
+## Pubblicazione iniziale con GitHub Pages
+
+Apri **Settings → Pages → Build and deployment** sul repository e scegli **Deploy from a branch**, branch **main**, directory **/(root)**, quindi salva.
+
+Sito pubblico (dopo l'attivazione e la build): https://francescomammana.github.io/Appunti/
+
+## Nuovi articoli dalla chat
+
+Scrivi «Pubblica sul repository Appunti un articolo su ...». Il nuovo file verrà creato in `_posts/`; la home e l'archivio si aggiornano da soli quando GitHub Pages rigenera il sito.
+
+Articolo inaugurale: [AI Coding 2026](https://francescomammana.github.io/Appunti/articoli/ai-coding-2026/).
+
+Non pubblicare credenziali o informazioni riservate: repository e sito sono pubblici.
