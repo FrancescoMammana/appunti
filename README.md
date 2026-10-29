@@ -12,6 +12,7 @@ Blog statico pubblicabile con **GitHub Pages + Jekyll**, senza server o build lo
 - `_layouts/default.html` — layout condiviso delle pagine.
 - `assets/css/theme.css` — palette e sfondo condivisi da home e articoli.
 - `assets/css/style.css` — stile del blog.
+- `assets/icons/favicon.svg` — icona blocco note per la scheda del browser e il logo del sito.
 - `_config.yml` — impostazioni GitHub Pages.
 - `GUIDA-PUBBLICAZIONE.md` — guida per pubblicare dalla chat.
 
