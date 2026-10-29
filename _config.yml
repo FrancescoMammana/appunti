@@ -1,0 +1,12 @@
+title: "Appunti"
+description: "Ricerche, guide, idee e strumenti raccolti nel tempo."
+lang: "it"
+url: "https://francescomammana.github.io"
+baseurl: "/Appunti"
+timezone: "Europe/Rome"
+markdown: kramdown
+permalink: /articoli/:title/
+future: false
+exclude:
+  - README.md
+  - GUIDA-PUBBLICAZIONE.md
