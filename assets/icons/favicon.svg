@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Appunti: icona blocco note">
+  <title>Appunti — blocco note</title>
+  <rect width="64" height="64" rx="15" fill="#0c1422"/>
+  <rect x="13" y="11" width="42" height="46" rx="7" fill="#142337" stroke="#71e4cb" stroke-width="3"/>
+  <path d="M22 11v9M32 11v9M42 11v9" stroke="#71e4cb" stroke-width="5" stroke-linecap="round"/>
+  <path d="M22 30h24M22 39h24M22 48h16" stroke="#f3f7fc" stroke-width="3.5" stroke-linecap="round"/>
+</svg>
