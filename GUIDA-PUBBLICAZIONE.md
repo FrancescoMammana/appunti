@@ -29,6 +29,30 @@ Contenuto **Markdown** con sezioni, link e immagini.
 
 Crea un file `_posts/YYYY-MM-DD-slug.html` con lo stesso front matter, impostando `layout: null` e inserendo sotto il separatore `---` un documento HTML completo (doctype, head, body, CSS e JS). Per il ritorno alla home usa un collegamento `{{ '/' | relative_url }}` dentro l'HTML.
 
+## Tema condiviso e colori coerenti
+
+La palette e lo **sfondo del blog** sono centralizzati in `assets/css/theme.css`. La home e tutti gli articoli Markdown che usano `layout: default` caricano già questo file automaticamente tramite `_layouts/default.html`.
+
+Per gli **articoli HTML autonomi** (con `layout: null`), inserisci nel tag `<head>` questo riferimento, **prima** del CSS specifico dell'articolo:
+
+```html
+<link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
+```
+
+Poi evita di ridefinire `:root` con colori diversi o `body { background: ... }`. Usa invece le variabili condivise per testo, sfondo, pannelli, bordi e accenti:
+
+```css
+/* Il body eredita lo stesso sfondo della home dal tema condiviso. */
+.card {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+.card a { color: var(--accent); }
+```
+
+Variabili principali: `--bg`, `--panel`, `--panel2`, `--border`, `--line`, `--text`, `--muted`, `--accent` e `--aqua`. È possibile modificare `assets/css/theme.css` per cambiare contemporaneamente la grafica di home e articoli.
+
 ## Consigli
 
 - Una data valida e non futura: i post con data futura non vengono pubblicati con `future: false`.
