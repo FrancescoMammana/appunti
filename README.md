@@ -10,6 +10,7 @@ Blog statico pubblicabile con **GitHub Pages + Jekyll**, senza server o build lo
 - `_posts/YYYY-MM-DD-slug.md` — nuovi articoli Markdown.
 - `_posts/YYYY-MM-DD-slug.html` — articoli HTML interattivi.
 - `_layouts/default.html` — layout condiviso delle pagine.
+- `assets/css/theme.css` — palette e sfondo condivisi da home e articoli.
 - `assets/css/style.css` — stile del blog.
 - `_config.yml` — impostazioni GitHub Pages.
 - `GUIDA-PUBBLICAZIONE.md` — guida per pubblicare dalla chat.
