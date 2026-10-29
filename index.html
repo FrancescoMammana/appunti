@@ -1,0 +1,6 @@
+---
+layout: default
+title: "Appunti — Ricerche e guide"
+---
+<section class="intro"><span class="eyebrow">RACCOLTA DI IDEE · GUIDE · TECNOLOGIA</span><h1>Appunti<span class="dot">.</span></h1><p>Uno spazio per conservare ricerche, confronti e approfondimenti. Articoli indipendenti, pagine statiche e strumenti interattivi.</p></section>
+<section class="listing"><div class="section-heading"><h2>Articoli</h2><span>{{ site.posts.size }} pubblicati</span></div>{% for post in site.posts %}<article class="postcard"><div class="post-meta"><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%d/%m/%Y' }}</time> {% for category in post.categories %}<span class="category">{{ category | replace: '-', ' ' }}</span>{% endfor %}</div><h3><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3><p>{{ post.description | default: post.excerpt | strip_html | truncate: 220 }}</p><a class="readmore" href="{{ post.url | relative_url }}">Leggi l'articolo →</a></article>{% else %}<p>Ancora nessun articolo pubblicato.</p>{% endfor %}</section>
