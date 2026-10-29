@@ -20,12 +20,12 @@ Blog statico pubblicabile con **GitHub Pages + Jekyll**, senza server o build lo
 
 Apri **Settings → Pages → Build and deployment** sul repository e scegli **Deploy from a branch**, branch **main**, directory **/(root)**, quindi salva.
 
-Sito pubblico (dopo l'attivazione e la build): https://francescomammana.github.io/Appunti/
+Sito pubblico (dopo l'attivazione e la build): https://francescomammana.github.io/appunti/
 
 ## Nuovi articoli dalla chat
 
 Scrivi «Pubblica sul repository Appunti un articolo su ...». Il nuovo file verrà creato in `_posts/`; la home e l'archivio si aggiornano da soli quando GitHub Pages rigenera il sito.
 
-Articolo inaugurale: [AI Coding 2026](https://francescomammana.github.io/Appunti/articoli/ai-coding-2026/).
+Articolo inaugurale: [AI Coding 2026](https://francescomammana.github.io/appunti/articoli/ai-coding-2026/).
 
 Non pubblicare credenziali o informazioni riservate: repository e sito sono pubblici.
