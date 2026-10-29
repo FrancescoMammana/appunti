@@ -1,0 +1,20 @@
+/* Palette condivisa tra home e articoli di Appunti.
+   Modificare questo file per aggiornare tutti gli sfondi e i colori principali. */
+:root {
+  color-scheme: dark;
+  --bg: #0c1422;
+  --panel: #142337;
+  --panel2: #17263a;
+  --border: #30425b;
+  --line: #30425b;
+  --text: #f3f7fc;
+  --muted: #b0c0d4;
+  --accent: #71e4cb;
+  --aqua: var(--accent);
+  --blue: #89adff;
+  --gold: #facb80;
+  --pink: #edb2e4;
+}
+body {
+  background: radial-gradient(ellipse at 100% 0%, #173e48, transparent 34%), var(--bg);
+}
