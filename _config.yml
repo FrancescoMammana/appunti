@@ -2,7 +2,7 @@ title: "Appunti"
 description: "Ricerche, guide, idee e strumenti raccolti nel tempo."
 lang: "it"
 url: "https://francescomammana.github.io"
-baseurl: "/Appunti"
+baseurl: "/appunti"
 timezone: "Europe/Rome"
 markdown: kramdown
 permalink: /articoli/:title/
