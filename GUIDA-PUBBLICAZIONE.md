@@ -71,5 +71,5 @@ L'icona accanto al nome **Appunti** nella home utilizza lo stesso file SVG, cos�
 - Una data valida e non futura: i post con data futura non vengono pubblicati con `future: false`.
 - Slug univoco in `permalink`.
 - Se cambi lo slug o il permalink si interrompono i link già condivisi.
-- Testare i link su GitHub Pages perché il sito vive nel sottopercorso `/Appunti/`.
+- Testare i link su GitHub Pages perché il sito vive nel sottopercorso `/appunti/`.
 - Non inserire chiavi API, password o dati privati: il repository e il sito sono pubblici.
