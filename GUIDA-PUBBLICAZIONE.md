@@ -53,6 +53,19 @@ Poi evita di ridefinire `:root` con colori diversi o `body { background: ... }`.
 
 Variabili principali: `--bg`, `--panel`, `--panel2`, `--border`, `--line`, `--text`, `--muted`, `--accent` e `--aqua`. È possibile modificare `assets/css/theme.css` per cambiare contemporaneamente la grafica di home e articoli.
 
+## Favicon e icona del blog
+
+La favicon in stile blocco note è in `assets/icons/favicon.svg`. È già inclusa nel layout condiviso e compare automaticamente nelle pagine Markdown.
+
+Per gli articoli HTML autonomi con `layout: null`, aggiungi nel `<head>` anche:
+
+```html
+<link rel="icon" type="image/svg+xml" href="{{ '/assets/icons/favicon.svg' | relative_url }}">
+<meta name="theme-color" content="#0c1422">
+```
+
+L'icona accanto al nome **Appunti** nella home utilizza lo stesso file SVG, così tutte le pagine mantengono la stessa identità visiva.
+
 ## Consigli
 
 - Una data valida e non futura: i post con data futura non vengono pubblicati con `future: false`.
