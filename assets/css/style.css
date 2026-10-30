@@ -107,3 +107,6 @@
 }
 
 @media(max-width:650px){.site-header nav{gap:13px}.site-header nav a{font-size:13px}}
+
+/* Layout mobile del menu: mantiene raggiungibile il selettore del tema. */
+@media(max-width:480px){.site-header .wrap{flex-wrap:wrap;gap:10px;padding:11px 0;min-height:0}.site-header nav{width:100%;justify-content:space-between;gap:10px}.site-header nav a{font-size:14px}}
