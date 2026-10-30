@@ -1,0 +1,65 @@
+---
+layout: default
+title: "Test, CI/CD e review: il controllo qualità degli agenti"
+date: 2026-10-30 07:05:00 +0100
+description: "Quarta tappa: costruire una pipeline che intercetti regressioni e rischi prima del merge, con verifiche tecniche e umane."
+categories: [sviluppo, intelligenza-artificiale]
+tags: [ai-engineering, coding-agents, claude-code, codex]
+series_id: ai-engineering
+series_label: "Da Vibe Coder ad AI Engineer"
+series_order: 5
+series_chapter: "Test, CI/CD e sicurezza"
+permalink: /serie/ai-engineering/05-test-ci-cd-sicurezza/
+---
+
+<p class="article-lead">Il software generato dall'AI può funzionare nella demo e rompersi alla prima modifica. Per questo il video richiama un principio classico dell'ingegneria del software: <strong>non è il modello a decidere se il codice è pronto, sono le verifiche</strong>.</p>
+<p class="chapter-ref">Nel video: <a href="https://youtu.be/uD99aKV4fq8?t=1324">22:04–26:30</a>.</p>
+<h2>1. Il problema delle regressioni</h2>
+<p>Quando un agente corregge un bug, potrebbe introdurre un errore in una funzionalità che prima funzionava. I test automatizzati cercano proprio questo genere di regressioni. Il relatore distingue test unitari e test end-to-end, da eseguire automaticamente sulle pull request.</p>
+<div class="table-scroll"><table><thead><tr><th>Controllo</th><th>Che cosa verifica</th><th>Quando eseguirlo</th></tr></thead><tbody>
+<tr><td>Lint e formattazione</td><td>Convenzioni e problemi statici semplici</td><td>Ogni PR</td></tr>
+<tr><td>Test unitari</td><td>Funzioni e componenti isolati</td><td>Ogni PR</td></tr>
+<tr><td>Test di integrazione</td><td>Interazioni tra API, servizi e dati</td><td>Ogni PR o nelle pipeline dedicate</td></tr>
+<tr><td>Test E2E</td><td>Percorsi reali dell'utente</td><td>PR rilevanti e/o rilascio</td></tr>
+<tr><td>Dependency e secret scanning</td><td>Librerie vulnerabili e possibili credenziali</td><td>Continuamente e a ogni cambio</td></tr>
+<tr><td>Review tecnica e sicurezza</td><td>Design, autorizzazioni, rischi non coperti dai test</td><td>Prima del merge</td></tr>
+</tbody></table></div>
+<h2>2. Un esempio minimo di GitHub Actions</h2>
+<p>Per un progetto JavaScript con script <code>test</code> e <code>build</code> definiti in <code>package.json</code>, si può partire da questo workflow. È <em>un modello da adattare</em>, non una configurazione universale.</p>
+<pre><code>name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm test -- --run
+      - run: npm run build</code></pre>
+<p>Il comando di test dipende dal runner scelto: se il progetto non usa Vitest o non dispone di quegli script, va sostituito. Per repository con frontend e backend separati si possono creare job distinti, eventualmente con matrix e servizi di test.</p>
+<p>In produzione è opportuno valutare anche il pinning delle GitHub Actions a revisioni affidabili, permessi minimi del token e protezione dei segreti.</p>
+<h2>3. Bloccare i merge che falliscono</h2>
+<p>Il video mostra come i check associati alla pull request possano impedire di integrare una modifica difettosa. In GitHub questo richiede la corretta configurazione di <strong>ruleset o protezioni del branch</strong>, non semplicemente la presenza di un file YAML. Un controllo facoltativo che fallisce ma viene ignorato non costituisce una barriera affidabile.</p>
+<h2>4. Review AI: utile, ma non sufficiente</h2>
+<p>L'autore propone sessioni separate di revisione del codice e di sicurezza, eventualmente usando un provider diverso da quello che ha scritto la modifica. L'approccio può identificare bug, problemi di chiarezza e vulnerabilità evidenti.</p>
+<p>Tuttavia nessuna review AI garantisce la sicurezza dell'applicazione. Per funzioni sensibili servono controlli sull'autorizzazione, test, strumenti specializzati e, quando necessario, un audit umano. L'OWASP Top 10 è un buon riferimento, non una checklist che da sola certifica la sicurezza.</p>
+<h2>5. Tre prompt di verifica</h2>
+<div class="prompt-block"><strong>Code review</strong><p>Analizza il diff rispetto a main. Elenca soltanto problemi concreti, con file, riga, scenario di riproduzione e gravità. Non inventare esecuzioni di test.</p><strong>Security review</strong><p>Esamina autenticazione, autorizzazioni, validazione input, gestione dei segreti, dipendenze e accessi ai dati. Se non puoi dimostrare una vulnerabilità, descrivila come ipotesi da testare.</p><strong>Test gap review</strong><p>Confronta i criteri di accettazione dell'issue con i test esistenti. Identifica percorsi non coperti e proponi test deterministici.</p></div>
+<h2>6. Esercizio operativo</h2>
+<ol>
+<li>Individua tre funzioni critiche e aggiungi test che fallirebbero in caso di regressione.</li>
+<li>Configura GitHub Actions su una pull request di prova.</li>
+<li>Attiva le protezioni del branch per i check più importanti.</li>
+<li>Chiedi una review AI indipendente; verifica manualmente i rilievi.</li>
+<li>Documenta i risultati nella PR, compresi i test non effettuati.</li>
+</ol>
+<div class="takeaway"><strong>Risultato atteso</strong><p>Una modifica AI non arriva su <code>main</code> soltanto perché «sembra funzionare»: deve superare criteri tecnici espliciti e una decisione di rilascio.</p></div>
+<p class="source-foot">Fonte: <a href="https://youtu.be/uD99aKV4fq8?t=1324">video, «CI/CD Pipeline for Agents»</a>. L'esempio GitHub Actions e le cautele sui permessi sono indicazioni operative aggiuntive.</p>
