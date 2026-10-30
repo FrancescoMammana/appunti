@@ -21,6 +21,15 @@
       if (icon) icon.textContent = isLight ? '☾' : '☀';
       if (text) text.textContent = isLight ? 'Tema scuro' : 'Tema chiaro';
     });
+    // Logo nel menu e favicon della scheda seguono la stessa preferenza.
+    document.querySelectorAll('[data-theme-icon]').forEach(function (element) {
+      var nextIcon = element.getAttribute(isLight ? 'data-light-src' : 'data-dark-src');
+      if (!nextIcon) return;
+      var attribute = element.tagName.toLowerCase() === 'link' ? 'href' : 'src';
+      if (element.getAttribute(attribute) !== nextIcon) {
+        element.setAttribute(attribute, nextIcon);
+      }
+    });
     var meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', isLight ? '#ffffff' : '#0c1422');
   }
