@@ -9,6 +9,8 @@ Blog statico pubblicabile con **GitHub Pages + Jekyll**, senza server o build lo
 - `index.html` — home con elenco automatico degli articoli.
 - `_posts/YYYY-MM-DD-slug.md` — nuovi articoli Markdown.
 - `_posts/YYYY-MM-DD-slug.html` — articoli HTML interattivi.
+- `serie/ai-engineering.html` — indice dinamico della prima serie di articoli.
+- Articoli con `series_id` e `series_order` — capitoli collegati automaticamente dal layout.
 - `_layouts/default.html` — layout condiviso delle pagine.
 - `assets/css/theme.css` — palette e sfondo condivisi da home e articoli.
 - `assets/css/style.css` — stile del blog.
@@ -29,3 +31,7 @@ Scrivi «Pubblica sul repository Appunti un articolo su ...». Il nuovo file ver
 Articolo inaugurale: [AI Coding 2026](https://francescomammana.github.io/appunti/articoli/ai-coding-2026/).
 
 Non pubblicare credenziali o informazioni riservate: repository e sito sono pubblici.
+
+## Prima serie di approfondimento
+
+[Da Vibe Coder ad AI Engineer](https://francescomammana.github.io/appunti/serie/ai-engineering/) — 7 articoli dedicati al metodo di sviluppo con coding agent, tratti e rielaborati dal video di Leon van Zyl. L'ordine di lettura è guidato da un indice e pulsanti precedente/successivo. I capitoli si trovano in `_posts/` e vengono inseriti in home come una sola raccolta.
