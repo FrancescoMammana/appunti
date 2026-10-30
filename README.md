@@ -44,3 +44,35 @@ Non pubblicare credenziali o informazioni riservate: repository e sito sono pubb
 Il logo del sito e la favicon del browser seguono automaticamente il tema scelto: sfondo scuro nel tema scuro, sfondo bianco nel tema chiaro. Il blog usa **tema scuro iniziale**, come nel progetto originale. Il pulsante **Tema chiaro / Tema scuro** compare nel menu di tutte le pagine Jekyll e nel report AI Coding. La scelta viene salvata in `localStorage` (`appunti-theme-v1`) e rimane attiva navigando tra le pagine e nelle visite successive con lo stesso browser. In modalità privata o con storage disabilitato la scelta funziona finché non si ricarica la pagina.
 
 Palette: `assets/css/theme.css`. Il layout principale importa `theme.js` prima dei CSS per evitare un flash del tema sbagliato. I report con `layout: null` devono importare esplicitamente entrambi e fornire il controllo di cambio tema; evita colori fissi e usa `var(--bg)`, `var(--panel)`, `var(--text)`, `var(--muted)`, `var(--accent)`, ecc. Il report AI Coding include un foglio CSS specifico per le parti non già basate su variabili.
+
+## Appunti installabile come PWA
+
+Appunti è una Progressive Web App installabile da Chrome Android tramite **Installa app**. Rimane un sito Jekyll distribuito da GitHub Pages, senza server aggiuntivo.
+
+- `manifest.webmanifest` contiene identità, nome, icone e URL iniziale, con percorso `/appunti/`.
+- `sw.js` è l'**unico Service Worker** per tutte le pagine del blog. Jekyll lo rigenera a ogni build e inserisce automaticamente **tutti i post pubblicati** nella cache offline.
+- `assets/js/pwa.js` registra il Service Worker, rileva gli aggiornamenti e propone un pulsante per applicarli.
+- `offline.html` è la pagina di fallback quando un link mai salvato viene aperto senza connessione.
+- `assets/icons/icon-{192,512}.png` e `icon-maskable.png` sono le icone Android dell'app.
+
+### Pubblicazione e aggiornamenti
+
+1. Crea normalmente nuovi articoli sotto `_posts/`, con permalink stabile e data non futura.
+2. GitHub Pages ricompila Jekyll e la lista di pagine in `sw.js`, senza aggiornamenti manuali all'elenco offline.
+3. Quando l'utente torna online, il browser rileva un nuovo worker, scarica gli articoli e le risorse della nuova versione. L'app propone **Aggiorna**; il precedente worker rimane attivo finché il nuovo non è pronto.
+4. Su una nuova installazione, apri Appunti online e lascia completare la prima sincronizzazione; la lettura offline dipende dalla disponibilità della cache e dai limiti di archiviazione del browser.
+
+### Layout unico
+
+Tutte le pagine, incluso il report AI Coding 2026, usano `_layouts/default.html`.
+Per i report HTML interattivi usa `layout: default` e, se serve, nel front matter:
+
+```yaml
+wide_layout: true
+extra_css:
+  - /assets/css/report.css
+extra_js:
+  - /assets/js/report.js
+```
+
+Il corpo articolo deve contenere solo il markup della pagina (senza `<html>`, `<head>`, `<body>` o script duplicati). I file di stile sono caricati dal layout comune. In particolare il CSS del report AI Coding è isolato sotto `.ai-coding` per non modificare i componenti globali.
