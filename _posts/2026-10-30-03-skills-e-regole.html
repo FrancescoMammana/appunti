@@ -1,0 +1,51 @@
+---
+layout: default
+title: "Skills, AGENTS.md e istruzioni: costruire un metodo riutilizzabile"
+date: 2026-10-30 07:03:00 +0100
+description: "Seconda tappa: come scrivere skills personalizzate, file di memoria e regole di progetto senza trasformarli in burocrazia."
+categories: [sviluppo, intelligenza-artificiale]
+tags: [ai-engineering, coding-agents, claude-code, codex]
+series_id: ai-engineering
+series_label: "Da Vibe Coder ad AI Engineer"
+series_order: 3
+series_chapter: "Skills e istruzioni"
+permalink: /serie/ai-engineering/03-skills-e-regole/
+---
+
+<p class="article-lead">Se spieghi ogni volta allo stesso agente come organizzare cartelle, testare il codice o applicare i colori del progetto, stai ripetendo un processo che potresti formalizzare. Il video propone di trasformare queste istruzioni in strumenti riutilizzabili.</p>
+<p class="chapter-ref">Nel video: <a href="https://youtu.be/uD99aKV4fq8?t=582">09:42–16:17</a>.</p>
+<h2>1. Che cos'è una skill</h2>
+<p>Una <strong>agent skill</strong> è una procedura che descrive all'agente <em>quando</em> compiere un'attività e <em>come</em> affrontarla. Può contenere istruzioni, riferimenti, checklist e modelli di output. Nel video compare l'esempio di una skill per avviare nuove applicazioni, basata su uno stack preferito, con regole specifiche quando servono funzioni AI o autenticazione.</p>
+<p>La skill ideale non è una sequenza rigida da eseguire in ogni situazione: deve chiarire trigger, precondizioni, risultati e verifiche. La sintassi concreta varia tra strumenti e piattaforme.</p>
+<h2>2. A cosa serve AGENTS.md</h2>
+<p><code>AGENTS.md</code> può contenere regole persistenti del repository: convenzioni di codice, comandi di build, confini di sicurezza e condizioni per dichiarare un task concluso. È utile quando un progetto viene lavorato da agenti diversi o in sessioni separate.</p>
+<div class="prompt-block"><strong>Esempio di regole per il repository</strong><ul>
+<li>Prima di modificare file, individua i requisiti e descrivi l'approccio.</li>
+<li>Non inserire segreti nel repository e non modificare ambienti di produzione senza approvazione.</li>
+<li>Esegui build, lint e test previsti; segnala esplicitamente i controlli non eseguiti.</li>
+<li>Per interventi non banali, usa un branch e apri una pull request.</li>
+<li>Non introdurre dipendenze senza motivarne la necessità.</li>
+</ul></div>
+<p>Queste istruzioni influenzano il comportamento dell'agente, ma <strong>non sostituiscono</strong> permessi GitHub, policy di accesso, test automatici e protezioni reali.</p>
+<h2>3. Design system e riferimenti condivisi</h2>
+<p>Il relatore cita un file <code>design.md</code> che documenta palette, tipografia, spaziature e componenti: la stessa logica si applica alle regole API, alle migrazioni database e al rilascio.</p>
+<p>Se un agente sta costruendo una pagina nuova, indicargli esplicitamente il design system è più affidabile che chiedergli di «usare lo stesso stile» senza accesso ai riferimenti.</p>
+<h2>4. Scrivere skills proprie, non solo copiarle</h2>
+<p>Uno dei passaggi più netti della conferenza (<a href="https://youtu.be/uD99aKV4fq8?t=732">12:12</a>) è l'invito a studiare i prompt altrui e poi scriverne di propri. Copiare una skill senza comprenderla rende difficile modificarla, verificarla e individuare istruzioni eccessive o pericolose.</p>
+<p>Per crearne una, scegli una procedura che ripeti spesso. Scrivi una prima versione corta, testala su due attività diverse, correggi le ambiguità e versionala. Non aggiungere una skill per ogni operazione elementare: troppi file possono complicare il contesto.</p>
+<h2>5. Un kit minimo di tre procedure</h2>
+<div class="table-scroll"><table><thead><tr><th>Procedura</th><th>Input</th><th>Risultato atteso</th></tr></thead><tbody>
+<tr><td>Avvio progetto</td><td>Requisiti, vincoli, stack</td><td>Architettura, piano, struttura iniziale</td></tr>
+<tr><td>Implementazione issue</td><td>Numero issue, criteri di accettazione</td><td>Patch, test, pull request</td></tr>
+<tr><td>Review applicazione</td><td>Diff e contesto tecnico</td><td>Rischi, test mancanti, osservazioni verificabili</td></tr>
+</tbody></table></div>
+<h2>6. Esercizio operativo</h2>
+<ol>
+<li>Raccogli le cinque istruzioni che ripeti più spesso al coding agent.</li>
+<li>Separa regole generali di progetto da procedure attivabili su richiesta.</li>
+<li>Scrivi un <code>AGENTS.md</code> di una pagina e una skill di review.</li>
+<li>Confronta il risultato di due task con e senza queste istruzioni.</li>
+<li>Riduci le regole che non producono un miglioramento osservabile.</li>
+</ol>
+<div class="takeaway"><strong>Risultato atteso</strong><p>Un repository con poche regole chiare, una procedura di review ripetibile e meno istruzioni da riscrivere a ogni sessione.</p></div>
+<p class="source-foot">Fonte: <a href="https://youtu.be/uD99aKV4fq8?t=582">video, «Agent Skills and AGENTS.md»</a>. Materiale dell'autore: <a href="https://github.com/leonvanzyl/skills">leonvanzyl/skills</a>. Esempi della serie da adattare al tool effettivamente usato.</p>
