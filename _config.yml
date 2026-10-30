@@ -7,6 +7,14 @@ timezone: "Europe/Rome"
 markdown: kramdown
 permalink: /articoli/:title/
 future: false
+# Layout condiviso applicato automaticamente a ogni articolo Jekyll.
+# Un articolo puo' sovrascriverlo dichiarando un altro layout nel front matter.
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: default
 exclude:
   - README.md
   - GUIDA-PUBBLICAZIONE.md
