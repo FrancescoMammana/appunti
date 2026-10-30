@@ -27,6 +27,7 @@ const ASSET_URLS = [
   {{ '/assets/css/report-theme.css' | relative_url | jsonify }},
   {{ '/assets/js/theme.js' | relative_url | jsonify }},
   {{ '/assets/js/pwa.js' | relative_url | jsonify }},
+  {{ '/assets/js/install-prompt.js' | relative_url | jsonify }},
   {{ '/assets/js/ai-coding.js' | relative_url | jsonify }},
   {{ '/assets/icons/favicon.svg' | relative_url | jsonify }},
   {{ '/assets/icons/favicon-light.svg' | relative_url | jsonify }},
