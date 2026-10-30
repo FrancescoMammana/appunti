@@ -1,0 +1,22 @@
+name: Validate Appunti PWA
+on:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+      - name: Validate compiled service worker and app scripts
+        run: |
+          node --check _site/sw.js
+          node --check _site/assets/js/pwa.js
+          node --check _site/assets/js/ai-coding.js
+      - name: Verify generated PWA and article layouts
+        run: node .github/scripts/check-pwa.mjs
