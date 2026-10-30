@@ -1,0 +1,32 @@
+{
+  "id": "/appunti/",
+  "name": "Appunti",
+  "short_name": "Appunti",
+  "description": "Guide, ricerche, approfondimenti e strumenti interattivi.",
+  "lang": "it",
+  "start_url": "/appunti/",
+  "scope": "/appunti/",
+  "display": "standalone",
+  "background_color": "#0c1422",
+  "theme_color": "#0c1422",
+  "icons": [
+    {
+      "src": "/appunti/assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/appunti/assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/appunti/assets/icons/icon-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
