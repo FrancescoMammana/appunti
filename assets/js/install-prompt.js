@@ -8,6 +8,7 @@
   var installed = false;
   var initialized = false;
   var showTimer = null;
+  var dismissedUntilMemory = 0;
   var banner = null;
   var installButton = null;
 
@@ -24,6 +25,7 @@
   }
 
   function isDismissed() {
+    if (dismissedUntilMemory > Date.now()) return true;
     try {
       var until = Number(localStorage.getItem(DISMISS_KEY));
       return Number.isFinite(until) && until > Date.now();
@@ -31,7 +33,8 @@
   }
 
   function dismissForDay() {
-    try { localStorage.setItem(DISMISS_KEY, String(Date.now() + ONE_DAY_MS)); }
+    dismissedUntilMemory = Date.now() + ONE_DAY_MS;
+    try { localStorage.setItem(DISMISS_KEY, String(dismissedUntilMemory)); }
     catch (error) { /* Preferenza non persistibile: il banner resta chiuso in questa visita. */ }
   }
 
