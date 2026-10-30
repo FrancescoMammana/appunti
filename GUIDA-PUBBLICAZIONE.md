@@ -53,6 +53,29 @@ Poi evita di ridefinire `:root` con colori diversi o `body { background: ... }`.
 
 Variabili principali: `--bg`, `--panel`, `--panel2`, `--border`, `--line`, `--text`, `--muted`, `--accent` e `--aqua`. È possibile modificare `assets/css/theme.css` per cambiare contemporaneamente la grafica di home e articoli.
 
+## Modalità chiara e scura per tutti gli articoli
+
+La home e gli articoli Markdown con `layout: default` includono automaticamente il selettore **Tema chiaro / Tema scuro**. In assenza di una scelta salvata il sito mantiene il tema scuro originale. La preferenza è memorizzata nel browser: cambia una sola volta e segue tutte le pagine.
+
+Per gli articoli HTML indipendenti con `layout: null`, aggiungi nel tag `<head>`, **prima** degli stili:
+
+```html
+<script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
+<link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
+```
+
+E, nel body, il controllo visibile (senza librerie JavaScript esterne):
+
+```html
+<button type="button" class="theme-toggle" data-theme-toggle
+        aria-label="Passa al tema chiaro" aria-pressed="false">
+  <span class="theme-toggle-icon" aria-hidden="true">☀</span>
+  <span class="theme-toggle-label">Tema chiaro</span>
+</button>
+```
+
+Usa colori basati sulle variabili CSS `--bg`, `--panel`, `--panel2`, `--text`, `--body-text`, `--muted`, `--accent`, `--line`, `--border`, `--code-bg`. Se un articolo include CSS con colori fissi, prevedi anche delle regole `html[data-theme="light"]` per i pannelli, tabelle e controlli. Come esempio concreto, vedi `assets/css/report-theme.css`.
+
 ## Favicon e icona del blog
 
 La favicon in stile blocco note è in `assets/icons/favicon.svg`. È già inclusa nel layout condiviso e compare automaticamente nelle pagine Markdown.
