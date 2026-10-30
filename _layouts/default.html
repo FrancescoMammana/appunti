@@ -7,6 +7,7 @@
   <title>{% if page.title %}{{ page.title | escape }} | {% endif %}{{ site.title | escape }}</title>
   <link rel="icon" type="image/svg+xml" href="{{ '/assets/icons/favicon.svg' | relative_url }}">
   <meta name="theme-color" content="#0c1422">
+  <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
   <link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
@@ -20,6 +21,7 @@
         <a href="{{ '/' | relative_url }}">Articoli</a>
         <a href="{{ '/serie/ai-engineering/' | relative_url }}">Serie</a>
         <a href="{{ '/informazioni/' | relative_url }}">Info</a>
+        <button type="button" class="theme-toggle" data-theme-toggle aria-label="Passa al tema chiaro" aria-pressed="false"><span class="theme-toggle-icon" aria-hidden="true">☀</span><span class="theme-toggle-label">Tema chiaro</span></button>
       </nav>
     </div>
   </header>
