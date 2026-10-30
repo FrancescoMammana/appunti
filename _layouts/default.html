@@ -15,12 +15,13 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <link rel="apple-touch-icon" href="{{ '/assets/icons/icon-192.png' | relative_url }}">
-  {% if page.ai_coding %}
-  <link rel="stylesheet" href="{{ '/assets/css/ai-coding.css' | relative_url }}">
-  <link rel="stylesheet" href="{{ '/assets/css/report-theme.css' | relative_url }}">
-  <script defer src="{{ '/assets/js/ai-coding.js' | relative_url }}"></script>
-  {% endif %}
-  <script defer src="{{ '/assets/js/pwa.js' | relative_url }}"></script>
+  {% for css_file in page.extra_css %}
+  <link rel="stylesheet" href="{{ css_file | relative_url }}">
+  {% endfor %}
+  {% for js_file in page.extra_js %}
+  <script defer src="{{ js_file | relative_url }}"></script>
+  {% endfor %}
+  <script defer src="{{ '/assets/js/pwa.js' | relative_url }}" data-sw-src="{{ '/sw.js' | relative_url }}"></script>
 </head>
 <body>
   <header class="site-header">
