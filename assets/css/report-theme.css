@@ -1,0 +1,79 @@
+/* Tema del report AI Coding, mantenuto separato dal CSS generale del blog.
+   Le regole scure originarie dell'articolo rimangono inalterate. */
+.report-toolbar {
+  padding: 12px 5%;
+  background: #111d30;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.report-toolbar a { font-weight: 700; color: var(--aqua); text-decoration: none; }
+.report-toolbar a:hover { text-decoration: underline; }
+html[data-theme="light"] .report-toolbar { background: var(--panel); }
+
+/* Sfondo, pannelli, risultati e navigazione */
+html[data-theme="light"] .heroPanel,
+html[data-theme="light"] .panel,
+html[data-theme="light"] .plan,
+html[data-theme="light"] .method {
+  background: var(--panel-gradient);
+  border-color: var(--line);
+  box-shadow: 0 8px 28px var(--shadow);
+}
+html[data-theme="light"] .heroPanel { box-shadow: 0 12px 35px var(--shadow); }
+html[data-theme="light"] .nav a {
+  background: var(--panel2);
+  border-color: var(--border);
+  color: var(--muted);
+}
+html[data-theme="light"] .nav a:hover { border-color: var(--accent); color: var(--text); }
+html[data-theme="light"] .pick.primary {
+  background: linear-gradient(150deg,#e8f6f2,#f7fbfa);
+  border-color: #8cc9bb;
+}
+html[data-theme="light"] .pick .rate { color: var(--text); }
+html[data-theme="light"] .mini { background: #daefeb; color: #07594f; }
+html[data-theme="light"] .pill { color: #425a70; border-color: #c2d1de; }
+html[data-theme="light"] .filter {
+  background: var(--panel);
+  border-color: var(--border);
+  color: var(--body-text);
+}
+html[data-theme="light"] .filter:hover { border-color: var(--accent); }
+html[data-theme="light"] .filter.active {
+  background: #daefeb; color: #07594f; border-color: var(--accent);
+}
+html[data-theme="light"] .plan .tool { color: var(--body-text); }
+html[data-theme="light"] .tableWrap { background: #ffffff; border-color: var(--border); }
+html[data-theme="light"] th,html[data-theme="light"] td { border-color: var(--border); }
+html[data-theme="light"] th { background: var(--table-head-bg); color: #435970; }
+html[data-theme="light"] tbody tr:hover { background: #f1f8fa; }
+html[data-theme="light"] .yes { color: #116a50; }
+html[data-theme="light"] .conditional { color: #835407; }
+html[data-theme="light"] .no { color: #607185; }
+html[data-theme="light"] b,
+html[data-theme="light"] .flowList b { color: var(--text); }
+html[data-theme="light"] .calcLabel { color: var(--text); }
+html[data-theme="light"] .modelData { color: var(--muted); }
+html[data-theme="light"] .rail { background: #e3edf1; }
+html[data-theme="light"] .range { accent-color: var(--accent); }
+
+/* Avvisi, badge, FAQ e fonti */
+html[data-theme="light"] .warning {
+  background: #fff7e9; border-left-color: #b48023; color: #694913;
+}
+html[data-theme="light"] .num { background: #d6eee9; color: #07594f; }
+html[data-theme="light"] details { background: var(--panel); border-color: var(--border); }
+html[data-theme="light"] details summary { color: var(--text); }
+html[data-theme="light"] .sources a { color: var(--accent); }
+html[data-theme="light"] .footer { color: var(--muted); }
+html[data-theme="light"] .disclaimer {
+  background: #f1f5f8; border-color: var(--border); color: var(--muted);
+}
+html[data-theme="light"] .spark i { background: linear-gradient(var(--accent), #97d7d3); }
+html[data-theme="light"] .fill { background: linear-gradient(90deg,#347bba,#0f8c79); }
+html[data-theme="light"] .barRow:nth-child(even) .fill {
+  background: linear-gradient(90deg,#7866b2,#b35a98);
+}
