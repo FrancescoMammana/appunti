@@ -110,3 +110,15 @@
 
 /* Layout mobile del menu: mantiene raggiungibile il selettore del tema. */
 @media(max-width:480px){.site-header .wrap{flex-wrap:wrap;gap:10px;padding:11px 0;min-height:0}.site-header nav{width:100%;justify-content:space-between;gap:10px}.site-header nav a{font-size:14px}}
+
+/* Componenti condivisi per report a larghezza estesa e installazione PWA */
+.wrap-wide{width:min(100% - 24px,1200px)}
+.wrap-wide .ai-coding{margin:0 auto}
+.wrap-wide .ai-coding .shell{max-width:1170px}
+.pwa-update[hidden]{display:none}
+.pwa-update{position:fixed;z-index:1000;right:16px;bottom:16px;max-width:min(420px,calc(100vw - 32px));display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--panel);color:var(--text);border:1px solid var(--accent);border-radius:14px;box-shadow:0 12px 32px var(--shadow);font-size:14px}
+.pwa-update button{cursor:pointer;border-radius:9px;border:1px solid var(--border);padding:8px 11px;background:var(--panel2);color:var(--text);font:inherit;font-weight:700}
+.pwa-update button#pwa-update-action{color:var(--accent)}
+.pwa-update button:hover{border-color:var(--accent)}
+.offline-page{min-height:45vh}
+@media(max-width:600px){.pwa-update{left:12px;right:12px;bottom:12px;flex-wrap:wrap}.pwa-update span{flex:1 0 100%}.wrap-wide{width:min(100% - 12px,1200px)}}
