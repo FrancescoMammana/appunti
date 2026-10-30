@@ -1,0 +1,54 @@
+---
+layout: default
+title: "Software Factory e Harness Engineering: coordinare più agenti"
+date: 2026-10-30 07:06:00 +0100
+description: "Quinta tappa: agent swarm, automazione delle issue, ambienti isolati, harness personalizzati e i loro limiti pratici."
+categories: [sviluppo, intelligenza-artificiale]
+tags: [ai-engineering, coding-agents, claude-code, codex]
+series_id: ai-engineering
+series_label: "Da Vibe Coder ad AI Engineer"
+series_order: 6
+series_chapter: "Software Factory e harness"
+permalink: /serie/ai-engineering/06-software-factory-harness/
+---
+
+<p class="article-lead">Quando issue, test e review funzionano, è naturale chiedersi se gli agenti possano lavorare su più richieste contemporaneamente. La risposta del video è la <strong>Software Factory</strong>: un sistema che riceve attività, le assegna a coding agent e restituisce pull request da valutare.</p>
+<p class="chapter-ref">Nel video: <a href="https://youtu.be/uD99aKV4fq8?t=1590">26:30–37:18</a>.</p>
+<h2>1. Dalla sessione singola a più agenti</h2>
+<p>L'autore propone di associare agenti diversi a issue diverse, operando su worktree indipendenti. In una fase successiva, agenti di monitoraggio possono rilevare problemi di design, codice e sicurezza, creare issue e delegare interventi.</p>
+<p>Nel suo esempio la fabbrica contiene più agenti di coding e utilizza etichette GitHub per lo stato: un'issue marcata come pronta viene presa in carico, un agente lavora al cambiamento e apre una PR. L'essere umano rimane nel ciclo di approvazione.</p>
+<div class="diagram"><div class="diagram-node">Monitoraggio / Persona → GitHub Issue</div><div class="diagram-node">Classificazione e assegnazione</div><div class="diagram-split"><div>Agente A<br><small>Feature</small></div><div>Agente B<br><small>Bugfix</small></div><div>Agente C<br><small>Review</small></div></div><div class="diagram-node">PR + CI + approvazione → main</div></div>
+<h2>2. Quali vantaggi sono reali?</h2>
+<ul>
+<li><strong>Parallelismo:</strong> più interventi realmente indipendenti possono avanzare senza attendere una singola sessione.</li>
+<li><strong>Tracciabilità:</strong> issue e PR conservano decisioni, stato e verifiche.</li>
+<li><strong>Isolamento:</strong> ambienti separati riducono le interferenze sul filesystem e su alcuni strumenti.</li>
+<li><strong>Disponibilità:</strong> agenti in esecuzione su infrastruttura dedicata non consumano necessariamente tutte le risorse del PC locale.</li>
+</ul>
+<p>Attenzione: le macchine virtuali non risolvono automaticamente prompt injection, esposizione di credenziali, accessi ai servizi, costi API o errori logici. L'isolamento è utile solo se configurato con permessi e confini coerenti.</p>
+<h2>3. Che cos'è il coding harness</h2>
+<p>Un <strong>harness</strong> è l'ambiente software nel quale opera il modello: prompt di sistema, tool, accessi ai file, memoria, hooks, ciclo agente, restrizioni, raccolta dei log e interfaccia. Claude Code, Codex e OpenCode adottano scelte differenti in quest'area; è possibile costruirne uno personalizzato se esiste un'esigenza concreta.</p>
+<p>Nel video viene mostrato <strong>SMOL</strong>, un harness personale ottimizzato per modelli locali tramite Ollama e LM Studio, con meno strumenti e un prompt di sistema ridotto. L'idea è adattare il contesto e i tool alle capacità del modello, invece di assumere che un unico ambiente sia ideale per tutti.</p>
+<h2>4. Harness Engineering: progettare vincoli e strumenti</h2>
+<p>La parte più generale non è costruire un nuovo terminale AI, ma progettare <strong>il contesto operativo</strong>: quali risorse può leggere l'agente, quando può scrivere, quali approvazioni richiedere, come rispettare policy aziendali, come registrare gli interventi e quali verifiche eseguire automaticamente.</p>
+<p>Esempi: nascondere informazioni personali non necessarie, bloccare l'accesso a strumenti non autorizzati, imporre workflow GitHub prima della pubblicazione e limitare l'uso di ambienti di produzione.</p>
+<h2>5. Il caso CubeFarm</h2>
+<p>La demo finale visualizza la fabbrica in un ufficio 3D: gli agenti corrispondono a sessioni effettive e la lavagna si collega a issue e pull request GitHub. È un'interfaccia dimostrativa suggestiva, ma la visualizzazione tridimensionale non è un requisito per automatizzare uno sviluppo affidabile.</p>
+<p>Progetto indicato dall'autore: <a href="https://github.com/leonvanzyl/cubefarm">leonvanzyl/cubefarm</a>. La presentazione cita il comando <code>npx cubefarm</code>; controlla sempre documentazione e permessi prima di eseguire pacchetti esterni.</p>
+<h2>6. Quando conviene davvero adottarla</h2>
+<div class="table-scroll"><table><thead><tr><th>Situazione</th><th>Scelta più semplice</th></tr></thead><tbody>
+<tr><td>Una o due issue alla settimana</td><td>Un agente + PR + test</td></tr>
+<tr><td>Più task indipendenti</td><td>Due worktree e due agenti</td></tr>
+<tr><td>Team con lavoro ripetitivo</td><td>Assegnazione guidata dalle issue</td></tr>
+<tr><td>Alto volume, requisiti di audit e budget</td><td>Valutazione di una Software Factory</td></tr>
+</tbody></table></div>
+<h2>7. Esercizio operativo</h2>
+<ol>
+<li>Misura quante issue indipendenti hai davvero in una settimana.</li>
+<li>Prova due agenti su branch e directory separati, lasciando la review manuale.</li>
+<li>Registra tempi, token consumati, errori e conflitti di merge.</li>
+<li>Prima di automatizzare l'assegnazione, definisci limiti di budget e permessi minimi.</li>
+<li>Non autorizzare merge e deploy di produzione completamente autonomi senza guardrail verificati.</li>
+</ol>
+<div class="takeaway"><strong>Risultato atteso</strong><p>Un criterio misurabile per scegliere tra lavoro sequenziale, agenti paralleli e orchestrazione, invece di adottare un'architettura complessa per il solo fascino della demo.</p></div>
+<p class="source-foot">Fonte: <a href="https://youtu.be/uD99aKV4fq8?t=1590">video, «Software Factory and Agent Swarms» e «Harness Engineering»</a>. Progetto: <a href="https://github.com/leonvanzyl/cubefarm">CubeFarm</a>.</p>
