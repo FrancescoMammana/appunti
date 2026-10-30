@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Appunti: icona blocco note, tema chiaro">
+  <title>Appunti — blocco note, tema chiaro</title>
+  <rect width="64" height="64" rx="15" fill="#ffffff"/>
+  <rect x="13" y="11" width="42" height="46" rx="7" fill="#f7f9fc" stroke="#096b60" stroke-width="3"/>
+  <path d="M22 11v9M32 11v9M42 11v9" stroke="#096b60" stroke-width="5" stroke-linecap="round"/>
+  <path d="M22 30h24M22 39h24M22 48h16" stroke="#172b3e" stroke-width="3.5" stroke-linecap="round"/>
+</svg>
