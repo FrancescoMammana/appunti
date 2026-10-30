@@ -40,6 +40,12 @@ for (const rawUrl of [...data.PAGE_URLS, ...data.ASSET_URLS]) {
 const home = content('index.html');
 assert.ok(home.includes('manifest.webmanifest'), 'Home missing PWA manifest');
 assert.ok(home.includes('data-sw-src="/appunti/sw.js"'), 'Home missing SW registration URL');
+assert.ok(home.includes('id="pwa-install"'), 'Home missing install banner');
+assert.ok(home.includes('id="pwa-install-dismiss"'), 'Home missing Non ora action');
+assert.ok(home.includes('id="pwa-install-action"'), 'Home missing Installa action');
+assert.ok(home.includes('/appunti/assets/js/install-prompt.js'), 'Home missing installation script');
+assert.ok(data.ASSET_URLS.includes('/appunti/assets/js/install-prompt.js'), 'Service Worker must precache installation script');
+
 const report = content('articoli/ai-coding-2026/index.html');
 assert.ok(report.includes('site-header'), 'Report missing shared site navigation');
 assert.ok(report.includes('ai-coding.css'), 'Report missing isolated styles');
@@ -47,6 +53,7 @@ assert.ok(report.includes('ai-coding.js'), 'Report missing interactive script');
 assert.ok(report.includes('id="bars"'), 'Cost calculator missing');
 assert.ok(report.includes('data-theme-toggle'), 'Theme toggle missing');
 assert.ok(report.includes('site-footer'), 'Report missing shared footer');
+assert.ok(report.includes('id="pwa-install"'), 'Report missing install banner');
 assert.equal((report.match(/<html\b/gi) || []).length, 1, 'Report must have exactly one HTML root');
 for (let n = 1; n <= 7; n++) {
   const chapter = data.PAGE_URLS.find(url => url.startsWith('/appunti/serie/ai-engineering/' + String(n).padStart(2, '0') + '-'));

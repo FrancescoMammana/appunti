@@ -10,12 +10,18 @@
 
   function showUpdate() {
     var element = document.getElementById('pwa-update');
-    if (element && currentRegistration && currentRegistration.waiting) element.hidden = false;
+    if (element && currentRegistration && currentRegistration.waiting) {
+      element.hidden = false;
+      window.dispatchEvent(new Event('appunti:update-available'));
+    }
   }
 
   function hideUpdate() {
     var element = document.getElementById('pwa-update');
-    if (element) element.hidden = true;
+    if (element) {
+      element.hidden = true;
+      window.dispatchEvent(new Event('appunti:update-dismissed'));
+    }
   }
 
   function setupButtons() {

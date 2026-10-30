@@ -122,3 +122,19 @@
 .pwa-update button:hover{border-color:var(--accent)}
 .offline-page{min-height:45vh}
 @media(max-width:600px){.pwa-update{left:12px;right:12px;bottom:12px;flex-wrap:wrap}.pwa-update span{flex:1 0 100%}.wrap-wide{width:min(100% - 12px,1200px)}}
+
+/* Issue #2 — invito non invasivo all'installazione, visibile solo quando Chrome lo consente. */
+.pwa-install[hidden]{display:none}
+.pwa-install{position:fixed;z-index:1001;bottom:16px;right:16px;width:min(430px,calc(100vw - 32px));display:grid;grid-template-columns:52px minmax(0,1fr);gap:12px 14px;align-items:center;padding:17px;border:1px solid var(--border);border-radius:17px;background:var(--panel);box-shadow:0 16px 45px var(--shadow);color:var(--text)}
+.pwa-install-icon{width:52px;height:52px;display:block;border-radius:13px;background:#fff;border:1px solid var(--border)}
+.pwa-install-copy strong{display:block;color:var(--text);font-size:15px;line-height:1.35}
+.pwa-install-copy p{margin:5px 0 0;color:var(--muted);font-size:13px;line-height:1.4}
+.pwa-install-actions{display:flex;gap:9px;grid-column:1/-1;justify-content:flex-end;flex-wrap:wrap}
+.pwa-install-actions button{font:700 13px/1.25 system-ui,-apple-system,"Segoe UI",sans-serif;border-radius:10px;padding:10px 15px;border:1px solid var(--border);cursor:pointer}
+.pwa-install-actions button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.pwa-install-later{background:var(--panel2);color:var(--text)}
+.pwa-install-accept{background:var(--accent);color:var(--accent-contrast);border-color:var(--accent)!important}
+.pwa-install-accept:hover{background:var(--accent-hover)}
+.pwa-install-later:hover{border-color:var(--accent)}
+.pwa-install-actions button:disabled{cursor:wait;opacity:.6}
+@media(max-width:600px){.pwa-install{bottom:12px;left:12px;right:12px;width:auto;max-width:440px;margin:auto}}
