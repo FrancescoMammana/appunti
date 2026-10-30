@@ -1,0 +1,49 @@
+---
+layout: default
+title: "GitHub Issues, branch e worktrees: dare struttura agli agenti"
+date: 2026-10-30 07:04:00 +0100
+description: "Terza tappa: organizzare richieste e modifiche attraverso issue, branch, worktree e pull request con un flusso controllabile."
+categories: [sviluppo, intelligenza-artificiale]
+tags: [ai-engineering, coding-agents, claude-code, codex]
+series_id: ai-engineering
+series_label: "Da Vibe Coder ad AI Engineer"
+series_order: 4
+series_chapter: "Issues, branch e worktrees"
+permalink: /serie/ai-engineering/04-github-issues-worktrees/
+---
+
+<p class="article-lead">Un coding agent è molto più utile quando lavora su richieste delimitate, visibili e verificabili. Il video propone di usare GitHub come centro operativo: un'issue descrive il lavoro, un branch lo isola, una pull request lo sottopone a verifica.</p>
+<p class="chapter-ref">Nel video: <a href="https://youtu.be/uD99aKV4fq8?t=977">16:17–22:04</a>.</p>
+<h2>1. Un'issue al posto di un prompt dimenticato</h2>
+<p>L'issue non deve limitarsi a «aggiungi la funzionalità X». Deve raccontare il problema, definire il comportamento atteso e stabilire come verificare il risultato. Questo la rende utile sia per una persona sia per un agente.</p>
+<div class="prompt-block"><strong>Esempio di GitHub Issue</strong><p><strong>Titolo:</strong> Aggiungere il filtro per stato alla lista delle attività.</p><p><strong>Contesto:</strong> oggi la pagina mostra tutte le attività senza distinzione.</p><p><strong>Requisiti:</strong> filtri «Tutte / Aperte / Completate»; filtro persistente nell'URL; nessuna regressione nella modifica delle attività.</p><p><strong>Accettazione:</strong> i tre filtri mostrano le righe corrette; il refresh conserva la selezione; i test esistenti passano.</p><p><strong>Fuori ambito:</strong> nessun cambiamento a ruoli e autorizzazioni.</p></div>
+<p>Nel video il relatore mostra come l'issue possa anche contenere commenti, screenshot, evidenze dei test e richieste di chiarimento: diventa la traccia dell'intervento.</p>
+<h2>2. Branch e worktree: due concetti diversi</h2>
+<p>Un <strong>branch</strong> identifica una linea di sviluppo nel repository Git. Un <strong>worktree</strong> è una directory di lavoro associata a un determinato branch o commit dello stesso repository. Con più worktree puoi aprire sessioni separate di agenti senza obbligarli a modificare gli stessi file nella stessa directory.</p>
+<div class="diagram"><div class="diagram-node">main · versione stabile</div><div class="diagram-split"><div>feature/filtro-stato<br><small>Agente A</small></div><div>fix/login<br><small>Agente B</small></div></div><div class="diagram-node">Pull request + test → merge controllato</div></div>
+<p>Una procedura locale di esempio:</p>
+<pre><code>git fetch origin
+git worktree add -b feature/filtro-stato ../app-filtro origin/main
+git worktree list</code></pre>
+<p>Questi comandi creano un branch e una nuova directory da <code>origin/main</code>. Non pubblicano il lavoro da soli: serviranno commit, push e pull request. Non usare automaticamente questi comandi in una cartella con modifiche non salvate senza averne controllato lo stato.</p>
+<h2>3. Il flusso completo per una modifica</h2>
+<ol class="editorial-steps">
+<li><strong>Definisci l'issue:</strong> problema, requisiti, vincoli, test attesi.</li>
+<li><strong>Assegna il lavoro:</strong> l'agente legge issue, codice e regole del progetto.</li>
+<li><strong>Isola la modifica:</strong> usa un feature branch; aggiungi un worktree se serve parallelismo reale.</li>
+<li><strong>Implementa e documenta:</strong> l'agente può aggiornare l'issue con motivazioni ed evidenze.</li>
+<li><strong>Apri la PR:</strong> riepilogo dei file toccati, verifica e limitazioni note.</li>
+<li><strong>Rivedi e integra:</strong> i controlli automatici passano, una persona approva, poi si effettua il merge.</li>
+</ol>
+<h2>4. Quando evitare il parallelismo</h2>
+<p>Se due agenti devono modificare gli stessi componenti, migrazioni o contratti API, aumentano i conflitti e il lavoro di integrazione. Prima di lanciare più sessioni, chiediti se le issue siano davvero indipendenti. Gli worktree isolano i file di lavoro, <strong>non</strong> database condivisi, servizi cloud, segreti e ambienti di produzione.</p>
+<h2>5. Esercizio operativo</h2>
+<ol>
+<li>Apri due issue con criteri di accettazione concreti.</li>
+<li>Fai implementare la prima su un branch dedicato.</li>
+<li>Chiedi una PR con riepilogo, test eseguiti e rischi residui.</li>
+<li>Prova un worktree soltanto per una seconda modifica indipendente.</li>
+<li>Verifica quali passaggi sono tracciati in GitHub e quali no.</li>
+</ol>
+<div class="takeaway"><strong>Risultato atteso</strong><p>Il lavoro dell'agente diventa leggibile e revisionabile: dalla richiesta iniziale al merge, senza modifiche dirette e opache alla versione stabile.</p></div>
+<p class="source-foot">Fonte: <a href="https://youtu.be/uD99aKV4fq8?t=977">video, «GitHub Issues Workflow» e «Claude Code Worktrees»</a>. Comandi Git ed esempio di issue sono rielaborazioni pratiche.</p>
