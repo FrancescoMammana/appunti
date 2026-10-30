@@ -1,0 +1,33 @@
+---
+layout: default
+title: "Da Vibe Coder ad AI Engineer — Serie completa"
+description: "Sette articoli per passare dai prompt isolati a un processo di sviluppo affidabile con coding agent, GitHub, CI/CD e Software Factory."
+permalink: /serie/ai-engineering/
+---
+{% assign chapters = site.posts | where: 'series_id', 'ai-engineering' | sort: 'series_order' %}
+<section class="series-lead">
+  <span class="eyebrow">SERIE · SVILUPPO E INTELLIGENZA ARTIFICIALE</span>
+  <h1>Da Vibe Coder<br>ad AI Engineer<span class="dot">.</span></h1>
+  <p class="series-subtitle">Sette capitoli per capire come usare gli agenti AI senza rinunciare alle buone pratiche di ingegneria del software.</p>
+  <div class="series-stats"><span>{{ chapters.size }} capitoli</span><span>Una roadmap pratica</span><span>Test, GitHub e sicurezza</span></div>
+  {% if chapters.size > 0 %}<a class="series-cta" href="{{ chapters.first.url | relative_url }}">Inizia dal capitolo 1 →</a>{% endif %}
+</section>
+<section class="series-overview" aria-labelledby="capitoli-title">
+  <div class="section-heading"><h2 id="capitoli-title">Indice della serie</h2><span>Leggi in ordine</span></div>
+  <ol class="series-toc">
+  {% for chapter in chapters %}
+    <li class="series-toc-item">
+      <a href="{{ chapter.url | relative_url }}">
+        <span class="toc-number">{{ chapter.series_order | prepend: '0' | slice: -2, 2 }}</span>
+        <span class="toc-body"><strong>{{ chapter.series_chapter | escape }}</strong><small>{{ chapter.description | escape }}</small></span>
+        <span class="toc-arrow" aria-hidden="true">↗</span>
+      </a>
+    </li>
+  {% endfor %}
+  </ol>
+</section>
+<aside class="series-about">
+  <h2>Da dove nasce la serie?</h2>
+  <p>Dal video <a href="https://youtu.be/uD99aKV4fq8">From Vibe Coder to AI Engineer: The Complete Roadmap</a> di Leon van Zyl, presentato all'AI Practitioners Summit 2026. I primi sei articoli seguono la struttura della conferenza; il settimo aggiunge una valutazione critica, un piano applicativo, una checklist e le conclusioni.</p>
+  <p>Gli articoli sono una rielaborazione in italiano basata sulla trascrizione del video, con consigli ed esempi pratici indipendenti. Non sono una traduzione integrale.</p>
+</aside>
