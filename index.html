@@ -2,5 +2,37 @@
 layout: default
 title: "Appunti — Ricerche e guide"
 ---
-<section class="intro"><span class="eyebrow">RACCOLTA DI IDEE · GUIDE · TECNOLOGIA</span><h1>Appunti<span class="dot">.</span></h1><p>Uno spazio per conservare ricerche, confronti e approfondimenti. Articoli indipendenti, pagine statiche e strumenti interattivi.</p></section>
-<section class="listing"><div class="section-heading"><h2>Articoli</h2><span>{{ site.posts.size }} pubblicati</span></div>{% for post in site.posts %}<article class="postcard"><div class="post-meta"><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%d/%m/%Y' }}</time> {% for category in post.categories %}<span class="category">{{ category | replace: '-', ' ' }}</span>{% endfor %}</div><h3><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3><p>{{ post.description | default: post.excerpt | strip_html | truncate: 220 }}</p><a class="readmore" href="{{ post.url | relative_url }}">Leggi l'articolo →</a></article>{% else %}<p>Ancora nessun articolo pubblicato.</p>{% endfor %}</section>
+{% assign ai_chapters = site.posts | where: 'series_id', 'ai-engineering' | sort: 'series_order' %}
+{% assign other_count = site.posts.size | minus: ai_chapters.size %}
+<section class="intro">
+  <span class="eyebrow">RACCOLTA DI IDEE · GUIDE · TECNOLOGIA</span>
+  <h1>Appunti<span class="dot">.</span></h1>
+  <p>Uno spazio per conservare ricerche, confronti e approfondimenti. Articoli indipendenti, serie tematiche e strumenti interattivi.</p>
+</section>
+{% if ai_chapters.size > 0 %}
+<section class="home-series" aria-labelledby="home-series-title">
+  <div class="home-series-top"><span class="eyebrow">IN EVIDENZA · SERIE IN {{ ai_chapters.size }} CAPITOLI</span><span class="home-series-pill">AI Engineering</span></div>
+  <h2 id="home-series-title"><a href="{{ '/serie/ai-engineering/' | relative_url }}">Da Vibe Coder ad AI Engineer</a></h2>
+  <p>Dal primo prompt alla Software Factory: una guida ragionata a stack, skills, GitHub, test e agenti AI, con esempi e valutazione critica.</p>
+  <ol class="home-series-preview">
+    {% for chapter in ai_chapters limit: 3 %}
+      <li><a href="{{ chapter.url | relative_url }}"><span>{{ chapter.series_order }}</span>{{ chapter.series_chapter | escape }}</a></li>
+    {% endfor %}
+  </ol>
+  <a class="series-cta" href="{{ '/serie/ai-engineering/' | relative_url }}">Apri tutti i {{ ai_chapters.size }} capitoli →</a>
+</section>
+{% endif %}
+<section class="listing">
+  <div class="section-heading"><h2>Altri articoli</h2><span>{{ other_count }} pubblicati</span></div>
+  {% for post in site.posts %}
+    {% unless post.series_id %}
+    <article class="postcard">
+      <div class="post-meta"><time datetime="{{ post.date | date: '%Y-%m-%d' }}">{{ post.date | date: '%d/%m/%Y' }}</time>
+      {% for category in post.categories %}<span class="category">{{ category | replace: '-', ' ' }}</span>{% endfor %}</div>
+      <h3><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h3>
+      <p>{{ post.description | default: post.excerpt | strip_html | truncate: 220 }}</p>
+      <a class="readmore" href="{{ post.url | relative_url }}">Leggi l'articolo →</a>
+    </article>
+    {% endunless %}
+  {% endfor %}
+</section>
