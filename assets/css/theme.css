@@ -1,5 +1,5 @@
-/* Palette condivisa tra home e articoli di Appunti.
-   Modificare questo file per aggiornare tutti gli sfondi e i colori principali. */
+/* Appunti: palette globale per il blog e gli articoli indipendenti.
+   La modalità iniziale è scura; assets/js/theme.js memorizza la scelta del lettore. */
 :root {
   color-scheme: dark;
   --bg: #0c1422;
@@ -8,13 +8,87 @@
   --border: #30425b;
   --line: #30425b;
   --text: #f3f7fc;
+  --body-text: #d9e5f0;
   --muted: #b0c0d4;
   --accent: #71e4cb;
+  --accent-hover: #a4f7e8;
+  --accent-contrast: #102322;
   --aqua: var(--accent);
   --blue: #89adff;
   --gold: #facb80;
   --pink: #edb2e4;
+  --page-gradient: radial-gradient(ellipse at 100% 0%, #173e48, transparent 34%);
+  --panel-gradient: linear-gradient(140deg, var(--panel), rgba(20,35,55,.65));
+  --preview-bg: rgba(12,20,34,.35);
+  --step-bg: #224344;
+  --code-bg: #24344b;
+  --pre-bg: #17283c;
+  --table-head-bg: #1a3047;
+  --highlight-gradient: linear-gradient(120deg,#143d3c,var(--panel));
+  --diagram-bg: #101e2f;
+  --diagram-node-bg: #20364d;
+  --diagram-node-border: #406075;
+  --rating-mid: #facb80;
+  --shadow: rgba(0,0,0,.25);
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #ffffff;
+  --panel: #f7f9fc;
+  --panel2: #eef3f8;
+  --border: #d6e0ea;
+  --line: #d6e0ea;
+  --text: #172b3e;
+  --body-text: #304358;
+  --muted: #52677b;
+  --accent: #096b60;
+  --accent-hover: #085348;
+  --accent-contrast: #ffffff;
+  --aqua: var(--accent);
+  --blue: #265ea2;
+  --gold: #935b0d;
+  --pink: #8c4475;
+  --page-gradient: radial-gradient(ellipse at 100% 0%, #edf7f4, transparent 38%);
+  --panel-gradient: linear-gradient(145deg,#ffffff,#f4f8fb);
+  --preview-bg: #f0f6f7;
+  --step-bg: #d9eee9;
+  --code-bg: #eaf0f5;
+  --pre-bg: #eef3f7;
+  --table-head-bg: #e8f0f6;
+  --highlight-gradient: linear-gradient(120deg,#e5f6ef,#f7f9fc);
+  --diagram-bg: #f6f9fc;
+  --diagram-node-bg: #eaf1f6;
+  --diagram-node-border: #c5d6e1;
+  --rating-mid: #946000;
+  --shadow: rgba(27,48,68,.10);
 }
 body {
-  background: radial-gradient(ellipse at 100% 0%, #173e48, transparent 34%), var(--bg);
+  background: var(--page-gradient), var(--bg);
+  color: var(--text);
+}
+/* Un unico selettore, condiviso anche dai report HTML senza layout Jekyll. */
+.theme-toggle {
+  -webkit-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  gap: 8px;
+  min-height: 38px;
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--text);
+  font: 650 13px/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.theme-toggle:hover { border-color: var(--accent); background: var(--panel2); }
+.theme-toggle:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.theme-toggle-icon { font-size: 17px; line-height: 1; }
+@media (max-width: 650px) {
+  .theme-toggle { width: 38px; height: 38px; padding: 7px; }
+  .theme-toggle-label { display: none; }
 }
