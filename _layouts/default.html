@@ -1,1 +1,80 @@
-<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="{{ page.description | default: site.description | escape }}"><title>{% if page.title %}{{ page.title | escape }} | {% endif %}{{ site.title | escape }}</title><link rel="icon" type="image/svg+xml" href="{{ '/assets/icons/favicon.svg' | relative_url }}"><meta name="theme-color" content="#0c1422"><link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}"><link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}"></head><body><header class="site-header"><div class="wrap"><a class="brand" href="{{ '/' | relative_url }}"><img class="brand-icon" src="{{ '/assets/icons/favicon.svg' | relative_url }}" alt="" width="28" height="28">Appunti<span>.</span></a><nav><a href="{{ '/' | relative_url }}">Articoli</a><a href="{{ '/informazioni/' | relative_url }}">Info</a></nav></div></header><main class="wrap">{% if page.layout == 'post' %}<article class="prose"><div class="post-meta"><time>{{ page.date | date: '%d/%m/%Y' }}</time></div><h1>{{ page.title | escape }}</h1>{% if page.description %}<p class="summary">{{ page.description }}</p>{% endif %}{{ content }}</article>{% else %}{{ content }}{% endif %}</main><footer class="site-footer"><div class="wrap">Appunti · {{ 'now' | date: '%Y' }} · Pubblicato con GitHub Pages e Jekyll</div></footer></body></html>
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ page.description | default: site.description | escape }}">
+  <title>{% if page.title %}{{ page.title | escape }} | {% endif %}{{ site.title | escape }}</title>
+  <link rel="icon" type="image/svg+xml" href="{{ '/assets/icons/favicon.svg' | relative_url }}">
+  <meta name="theme-color" content="#0c1422">
+  <link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="{{ '/' | relative_url }}">
+        <img class="brand-icon" src="{{ '/assets/icons/favicon.svg' | relative_url }}" alt="" width="28" height="28">Appunti<span>.</span>
+      </a>
+      <nav aria-label="Navigazione principale">
+        <a href="{{ '/' | relative_url }}">Articoli</a>
+        <a href="{{ '/serie/ai-engineering/' | relative_url }}">Serie</a>
+        <a href="{{ '/informazioni/' | relative_url }}">Info</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+  {% if page.series_id %}
+    {% assign chapters = site.posts | where: 'series_id', page.series_id | sort: 'series_order' %}
+    {% assign previous_order = page.series_order | minus: 1 %}
+    {% assign next_order = page.series_order | plus: 1 %}
+    <article class="prose series-article">
+      <a class="series-back" href="{{ '/serie/ai-engineering/' | relative_url }}">← Indice della serie</a>
+      <div class="chapter-meta">
+        <span>Serie · {{ page.series_label }}</span>
+        <span>Capitolo {{ page.series_order }} di {{ chapters.size }}</span>
+      </div>
+      <nav class="series-progress" aria-label="Capitoli della serie">
+        {% for chapter in chapters %}
+        <a href="{{ chapter.url | relative_url }}" {% if chapter.series_order == page.series_order %}class="active" aria-current="page"{% endif %} title="Capitolo {{ chapter.series_order }}: {{ chapter.series_chapter | escape }}">{{ chapter.series_order }}</a>
+        {% endfor %}
+      </nav>
+      <div class="post-meta"><time datetime="{{ page.date | date: '%Y-%m-%d' }}">{{ page.date | date: '%d/%m/%Y' }}</time> · <span>{{ page.series_chapter }}</span></div>
+      <h1>{{ page.title | escape }}</h1>
+      {% if page.description %}<p class="summary">{{ page.description }}</p>{% endif %}
+      <div class="series-content">{{ content }}</div>
+      <nav class="chapter-navigation" aria-label="Capitoli precedente e successivo">
+        {% for chapter in chapters %}
+          {% if chapter.series_order == previous_order %}
+            <a class="chapter-nav-card" href="{{ chapter.url | relative_url }}"><span>← Capitolo precedente</span><strong>{{ chapter.series_chapter | escape }}</strong></a>
+          {% endif %}
+        {% endfor %}
+        {% for chapter in chapters %}
+          {% if chapter.series_order == next_order %}
+            <a class="chapter-nav-card next" href="{{ chapter.url | relative_url }}"><span>Capitolo successivo →</span><strong>{{ chapter.series_chapter | escape }}</strong></a>
+          {% endif %}
+        {% endfor %}
+      </nav>
+      <details class="series-index">
+        <summary>Indice completo della serie ({{ chapters.size }} capitoli)</summary>
+        <ol>
+          {% for chapter in chapters %}
+            <li><a href="{{ chapter.url | relative_url }}"{% if chapter.series_order == page.series_order %} aria-current="page"{% endif %}>{{ chapter.series_chapter | escape }}</a></li>
+          {% endfor %}
+        </ol>
+      </details>
+    </article>
+  {% elsif page.layout == 'post' %}
+    <article class="prose">
+      <div class="post-meta"><time>{{ page.date | date: '%d/%m/%Y' }}</time></div>
+      <h1>{{ page.title | escape }}</h1>
+      {% if page.description %}<p class="summary">{{ page.description }}</p>{% endif %}
+      {{ content }}
+    </article>
+  {% else %}
+    {{ content }}
+  {% endif %}
+  </main>
+  <footer class="site-footer"><div class="wrap">Appunti · {{ 'now' | date: '%Y' }} · Pubblicato con GitHub Pages e Jekyll</div></footer>
+</body>
+</html>
