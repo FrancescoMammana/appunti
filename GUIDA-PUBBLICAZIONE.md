@@ -6,13 +6,16 @@ Non occorre aggiornare manualmente la home: Jekyll legge automaticamente `_posts
 
 Scrivi: **«Pubblica nel mio GitHub Appunti un nuovo articolo su [argomento], titolo [titolo]»**. Puoi fornire un testo, una ricerca, un documento o chiedere di preparare l'articolo da zero. L'assistente usa il collegamento GitHub e crea un file nel repository.
 
+## Layout automatico per tutti i post
+
+La configurazione Jekyll (`_config.yml`) assegna automaticamente `layout: default` a **tutti i file nella cartella `_posts/`** che hanno front matter YAML valido. Non serve ripetere questa impostazione in ogni articolo. Il layout condiviso include header, footer, navigazione, temi chiaro/scuro e PWA. Se necessario, un singolo post può comunque scegliere un layout diverso dichiarandolo esplicitamente.
+
 ## Articolo Markdown
 
 Crea `_posts/2026-11-05-titolo-esempio.md` con:
 
 ```markdown
 ---
-layout: default
 title: "Titolo dell'articolo"
 date: 2026-11-05 12:00:00 +0100
 description: "Una descrizione breve per la home e i motori di ricerca."
@@ -27,12 +30,11 @@ Contenuto **Markdown** con sezioni, link e immagini.
 
 ## Articolo HTML interattivo con il layout comune
 
-Crea un file `_posts/YYYY-MM-DD-slug.html` con front matter Jekyll e usa **`layout: default`**, come tutti gli altri articoli. Nel corpo inserisci solo HTML relativo al contenuto, **senza** duplicare `<!doctype>`, `<html>`, `<head>` o `<body>`.
+Crea un file `_posts/YYYY-MM-DD-slug.html` con front matter Jekyll: **il layout `default` è già applicato automaticamente**, come per tutti gli altri articoli. Nel corpo inserisci solo HTML relativo al contenuto, **senza** duplicare `<!doctype>`, `<html>`, `<head>` o `<body>`.
 
 Se servono tabelle larghe, stili e script specifici, nel front matter aggiungi:
 
 ```yaml
-layout: default
 wide_layout: true
 extra_css:
   - /assets/css/nome-report.css
