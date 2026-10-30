@@ -25,9 +25,24 @@ permalink: /articoli/titolo-esempio/
 Contenuto **Markdown** con sezioni, link e immagini.
 ```
 
-## Articolo HTML interattivo
+## Articolo HTML interattivo con il layout comune
 
-Crea un file `_posts/YYYY-MM-DD-slug.html` con lo stesso front matter, impostando `layout: null` e inserendo sotto il separatore `---` un documento HTML completo (doctype, head, body, CSS e JS). Per il ritorno alla home usa un collegamento `{{ '/' | relative_url }}` dentro l'HTML.
+Crea un file `_posts/YYYY-MM-DD-slug.html` con front matter Jekyll e usa **`layout: default`**, come tutti gli altri articoli. Nel corpo inserisci solo HTML relativo al contenuto, **senza** duplicare `<!doctype>`, `<html>`, `<head>` o `<body>`.
+
+Se servono tabelle larghe, stili e script specifici, nel front matter aggiungi:
+
+```yaml
+layout: default
+wide_layout: true
+extra_css:
+  - /assets/css/nome-report.css
+extra_js:
+  - /assets/js/nome-report.js
+```
+
+Il layout condiviso carica automaticamente menu, scelta del tema, icone, manifest PWA, registrazione del Service Worker e avviso di aggiornamento. Per evitare conflitti con header e footer, delimita le regole del CSS dell'articolo a una classe radice, per esempio `.mio-report`, invece di usare selettori globali come `body`, `section` e `h1`.
+
+**Esempio reale:** l'articolo AI Coding 2026 usa ora `layout: default`, con `assets/css/ai-coding.css` e `assets/js/ai-coding.js` separati. I sette articoli della serie AI Engineer continuano a funzionare senza modifiche.
 
 ## Tema condiviso e colori coerenti
 
@@ -57,30 +72,13 @@ Variabili principali: `--bg`, `--panel`, `--panel2`, `--border`, `--line`, `--te
 
 La home e gli articoli Markdown con `layout: default` includono automaticamente il selettore **Tema chiaro / Tema scuro**. In assenza di una scelta salvata il sito mantiene il tema scuro originale. La preferenza è memorizzata nel browser: cambia una sola volta e segue tutte le pagine.
 
-Per gli articoli HTML indipendenti con `layout: null`, aggiungi nel tag `<head>`, **prima** degli stili:
-
-```html
-<script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
-<link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
-```
-
-E, nel body, il controllo visibile (senza librerie JavaScript esterne):
-
-```html
-<button type="button" class="theme-toggle" data-theme-toggle
-        aria-label="Passa al tema chiaro" aria-pressed="false">
-  <span class="theme-toggle-icon" aria-hidden="true">☀</span>
-  <span class="theme-toggle-label">Tema chiaro</span>
-</button>
-```
-
-Usa colori basati sulle variabili CSS `--bg`, `--panel`, `--panel2`, `--text`, `--body-text`, `--muted`, `--accent`, `--line`, `--border`, `--code-bg`. Se un articolo include CSS con colori fissi, prevedi anche delle regole `html[data-theme="light"]` per i pannelli, tabelle e controlli. Come esempio concreto, vedi `assets/css/report-theme.css`.
+Per gli articoli che usano il layout condiviso non occorre aggiungere manualmente il pulsante del tema. Il layout include automaticamente `assets/js/theme.js` e le icone dinamiche. I report HTML speciali devono usare gli stili basati su variabili CSS ed evitare regole globali.
 
 ## Favicon e icona del blog
 
 Sono disponibili due favicon blocco note: `assets/icons/favicon.svg` (sfondo scuro) e `assets/icons/favicon-light.svg` (sfondo bianco). Il layout condiviso sceglie automaticamente la versione coerente con il tema, anche per il logo nella testata. La logica di selezione è in `assets/js/theme.js`.
 
-Per gli articoli HTML autonomi con `layout: null`, aggiungi nel `<head>` anche:
+Per le pagine con `layout: default`, favicon, tema e metadati sono già inclusi. Il layout usa questi collegamenti:
 
 ```html
 <link rel="icon" type="image/svg+xml"
@@ -118,3 +116,9 @@ Per una **nuova serie tematica** non basta cambiare `series_id`: crea una pagina
 - Se cambi lo slug o il permalink si interrompono i link già condivisi.
 - Testare i link su GitHub Pages perché il sito vive nel sottopercorso `/appunti/`.
 - Non inserire chiavi API, password o dati privati: il repository e il sito sono pubblici.
+
+## Disponibilità offline e nuovi articoli
+
+La PWA registra un **unico** Service Worker in `/appunti/sw.js`. Il file viene generato da Jekyll con `site.posts`: **non serve aggiungere a mano un articolo alla cache**. I contenuti nuovi sono scaricati automaticamente quando il nuovo worker viene installato mentre il telefono è online; al termine l'app propone l'aggiornamento. Le pagine salvate restano accessibili offline finché il browser ne conserva la cache. Non inserire risorse esterne essenziali senza prevedere un comportamento offline.
+
+Per verificare l'installazione: apri Appunti con Chrome Android, scegli **Installa app**, visita il sito online almeno una volta, quindi prova la navigazione in modalità aereo. In caso di aggiornamenti Jekyll, verifica anche che il nuovo articolo sia presente nel Service Worker generato.
