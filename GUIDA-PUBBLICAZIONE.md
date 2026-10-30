@@ -66,6 +66,24 @@ Per gli articoli HTML autonomi con `layout: null`, aggiungi nel `<head>` anche:
 
 L'icona accanto al nome **Appunti** nella home utilizza lo stesso file SVG, così tutte le pagine mantengono la stessa identità visiva.
 
+## Aggiungere un capitolo a una serie
+
+I capitoli della serie AI Engineer sono file HTML in `_posts/`, con `layout: default`, e hanno questo front matter supplementare:
+
+```yaml
+series_id: ai-engineering
+series_label: "Da Vibe Coder ad AI Engineer"
+series_order: 8
+series_chapter: "Titolo breve del capitolo"
+permalink: /serie/ai-engineering/08-titolo-del-capitolo/
+```
+
+Il layout `_layouts/default.html` aggiunge **automaticamente** progresso di lettura, collegamenti precedente/successivo e indice interno. L'indice `serie/ai-engineering.html` legge dinamicamente tutti i post con lo stesso `series_id` e li ordina tramite `series_order`.
+
+Per un capitolo nuovo, controlla che `series_order` sia un numero univoco e che data e permalink siano corretti. Scrivi il corpo senza duplicare il titolo: viene già mostrato dal layout.
+
+Per una **nuova serie tematica** non basta cambiare `series_id`: crea una pagina indice dedicata, poi aggiungi la sezione corrispondente nella home. Puoi chiedere in chat: «Crea una nuova serie nel blog appunti intitolata ... con ... capitoli, indice e navigazione». Prima di pubblicare verifica che gli indirizzi usino `relative_url` per rispettare `baseurl: "/appunti"`.
+
 ## Consigli
 
 - Una data valida e non futura: i post con data futura non vengono pubblicati con `future: false`.
