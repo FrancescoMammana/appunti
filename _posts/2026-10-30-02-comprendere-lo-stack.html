@@ -1,0 +1,53 @@
+---
+layout: default
+title: "Capire il codice prima di costruire: stack e architettura"
+date: 2026-10-30 07:02:00 +0100
+description: "Prima tappa: usare l'AI per comprendere un repository, mappare le tecnologie e allenarsi con progetti concreti."
+categories: [sviluppo, intelligenza-artificiale]
+tags: [ai-engineering, coding-agents, claude-code, codex]
+series_id: ai-engineering
+series_label: "Da Vibe Coder ad AI Engineer"
+series_order: 2
+series_chapter: "Fondamenta: stack e architettura"
+permalink: /serie/ai-engineering/02-comprendere-lo-stack/
+---
+
+<p class="article-lead">La prima competenza di chi lavora bene con coding agent è porre le domande giuste sul software. Un'app può apparire corretta nell'interfaccia e avere un'architettura inadatta, dipendenze fragili o una gestione delle credenziali rischiosa.</p>
+<p class="chapter-ref">Nel video: <a href="https://youtu.be/uD99aKV4fq8?t=335">05:35–09:42</a>.</p>
+<h2>1. Usare l'agente come guida tecnica</h2>
+<p>L'autore suggerisce di prendere un progetto GitHub interessante e chiedere all'agente di spiegarlo. È una buona idea, purché il modello analizzi <em>il repository effettivo</em> e distingua il codice trovato dalle sue ipotesi.</p>
+<p>Una mappa iniziale dovrebbe rispondere ad almeno queste domande:</p>
+<ul>
+<li><strong>Frontend:</strong> framework, routing, componenti, stato, librerie UI e sistema di build.</li>
+<li><strong>Backend:</strong> linguaggio, API, servizi, logica di dominio, autenticazione e autorizzazioni.</li>
+<li><strong>Dati:</strong> database, schema, migrazioni, backup, accesso e gestione dei segreti.</li>
+<li><strong>Operatività:</strong> ambienti, CI/CD, hosting, logging, osservabilità e test.</li>
+<li><strong>Vincoli:</strong> licenze, costi, prestazioni, dipendenze esterne e requisiti di sicurezza.</li>
+</ul>
+<h2>2. Un prompt utile da riutilizzare</h2>
+<div class="prompt-block"><p>Esamina questo repository senza modificare file. Ricostruisci l'architettura reale indicando per ogni affermazione il percorso dei file che la dimostrano. Crea una tabella con frontend, backend, database, autenticazione, integrazioni, test e deployment. Segnala ciò che non riesci a verificare e proponi tre rischi o punti da approfondire. Concludi con una spiegazione per un nuovo sviluppatore del progetto.</p></div>
+<p>Questa richiesta limita un rischio comune: ricevere una descrizione plausibile ma non basata sui file. La verifica dei riferimenti diventa parte del lavoro.</p>
+<h2>3. Costruire una libreria personale di scelte</h2>
+<p>La conferenza propone di annotare le tecnologie scoperte, invece di lasciare tutto nelle conversazioni. Una piccola scheda è spesso sufficiente:</p>
+<div class="table-scroll"><table><thead><tr><th>Componente</th><th>Scelta osservata</th><th>Domanda utile</th></tr></thead><tbody>
+<tr><td>UI</td><td>Framework e component library</td><td>È accessibile e mantenibile?</td></tr>
+<tr><td>API</td><td>REST, GraphQL o altro</td><td>Come sono validate le richieste?</td></tr>
+<tr><td>Persistenza</td><td>Database, ORM e migrazioni</td><td>Come vengono preservati i dati?</td></tr>
+<tr><td>Autenticazione</td><td>Provider, sessioni, ruoli</td><td>Chi può leggere o cambiare cosa?</td></tr>
+<tr><td>Distribuzione</td><td>Pipeline e hosting</td><td>Come si effettua il rollback?</td></tr>
+</tbody></table></div>
+<p>Annota anche <em>perché</em> una scelta sia appropriata: ripetere sempre lo stesso stack per abitudine può diventare un vincolo.</p>
+<h2>4. Fare pratica ricostruendo progetti</h2>
+<p>Il relatore suggerisce di ricreare applicazioni conosciute usando un agente e uno stack scelto consapevolmente. L'obiettivo è imparare a tradurre requisiti in componenti, non replicare il repository originale riga per riga.</p>
+<p>Per un esercizio realistico puoi creare un'app che gestisce una lista di attività con accesso utente, API, test e deployment. Definisci prima cosa debba funzionare; poi chiedi all'agente di proporre un piano, implementare in incrementi e spiegare le decisioni.</p>
+<div class="reading-note"><strong>Attenzione a licenze e dati</strong><p>Se studi o ricrei progetti pubblici, rispetta la licenza originale. Non copiare codice proprietario, credenziali, dati personali o marchi senza autorizzazione.</p></div>
+<h2>5. Esercizio operativo</h2>
+<ol>
+<li>Scegli un repository e chiedi la mappa architetturale con riferimenti ai file.</li>
+<li>Individua due decisioni progettuali da approfondire manualmente.</li>
+<li>Descrivi una mini-app con requisiti verificabili, non solo con un mockup.</li>
+<li>Fai produrre all'agente un piano prima del codice.</li>
+<li>Pubblica il risultato su GitHub, corredato da README e test minimi.</li>
+</ol>
+<div class="takeaway"><strong>Risultato atteso</strong><p>Un documento di architettura di una pagina e un piccolo progetto funzionante, di cui sai spiegare componenti, limiti e percorso di rilascio.</p></div>
+<p class="source-foot">Fonte: <a href="https://youtu.be/uD99aKV4fq8?t=335">video, capitolo «Learn Any Codebase With AI»</a>. Le schede e il prompt sono esempi operativi elaborati per questa serie.</p>
