@@ -22,6 +22,7 @@
   <script defer src="{{ js_file | relative_url }}"></script>
   {% endfor %}
   <script defer src="{{ '/assets/js/pwa.js' | relative_url }}" data-sw-src="{{ '/sw.js' | relative_url }}"></script>
+  <script defer src="{{ '/assets/js/install-prompt.js' | relative_url }}"></script>
 </head>
 <body>
   <header class="site-header">
@@ -94,6 +95,17 @@
     <button type="button" id="pwa-update-action">Aggiorna</button>
     <button type="button" id="pwa-update-dismiss" aria-label="Chiudi avviso aggiornamento">×</button>
   </div>
+  <aside id="pwa-install" class="pwa-install" aria-label="Invito a installare Appunti" hidden>
+    <img class="pwa-install-icon" src="{{ '/assets/icons/icon-192.png' | relative_url }}" alt="" width="52" height="52" loading="lazy">
+    <div class="pwa-install-copy">
+      <strong>Installa Appunti sul telefono</strong>
+      <p>Leggi gli articoli anche offline e apri Appunti dalla schermata Home.</p>
+    </div>
+    <div class="pwa-install-actions">
+      <button type="button" id="pwa-install-dismiss" class="pwa-install-later">Non ora</button>
+      <button type="button" id="pwa-install-action" class="pwa-install-accept">Installa</button>
+    </div>
+  </aside>
   <footer class="site-footer"><div class="wrap">Appunti · {{ 'now' | date: '%Y' }} · Pubblicato con GitHub Pages e Jekyll</div></footer>
 </body>
 </html>
