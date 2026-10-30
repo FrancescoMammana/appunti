@@ -1,0 +1,92 @@
+---
+layout: default
+title: "Dalla teoria alla pratica: valutazione critica, piano e checklist"
+date: 2026-10-30 07:07:00 +0100
+description: "Considerazioni critiche sul video, piano di adozione graduale, checklist operativa e conclusioni per sviluppare con agenti AI."
+categories: [sviluppo, intelligenza-artificiale]
+tags: [ai-engineering, coding-agents, ci-cd, software-factory]
+series_id: ai-engineering
+series_label: "Da Vibe Coder ad AI Engineer"
+series_order: 7
+series_chapter: "Valutazione e piano operativo"
+permalink: /serie/ai-engineering/07-valutazione-e-piano/
+---
+<p class="article-lead">Arrivati alla fine della roadmap, la domanda non è più «quanti agenti posso avviare?», ma «quali pratiche migliorano davvero il mio processo di sviluppo?». In questo capitolo riuniamo la valutazione critica del video, un piano di applicazione, la checklist e le conclusioni.</p>
+<p class="chapter-ref">Sintesi conclusiva della serie. <a href="https://youtu.be/uD99aKV4fq8">Rivedi il video originale</a> (37:18).</p>
+
+<h2>1. Valutazione critica: cosa funziona e cosa richiede cautela</h2>
+<p>Il messaggio più convincente della conferenza è che la qualità del software deve essere <strong>verificabile indipendentemente dal modello</strong> che ha scritto il codice. Il metodo riprende pratiche consolidate: documentazione dell'architettura, versionamento, revisioni, test automatici e distribuzioni controllate.</p>
+<div class="table-scroll"><table><thead><tr><th>Pratica proposta</th><th>Valutazione</th><th>Perché</th></tr></thead><tbody>
+<tr><td>Comprendere stack e architettura</td><td><span class="rating-high">Prioritaria</span></td><td>Evita dipendenza cieca da output plausibili ma errati.</td></tr>
+<tr><td>Skills e AGENTS.md</td><td><span class="rating-high">Molto utile</span></td><td>Rende istruzioni e convenzioni ripetibili e condivisibili.</td></tr>
+<tr><td>Issues, branch e pull request</td><td><span class="rating-high">Prioritaria</span></td><td>Rende tracciabili cambiamenti e decisioni.</td></tr>
+<tr><td>Test, CI/CD, branch protection</td><td><span class="rating-high">Essenziale</span></td><td>Riduce regressioni e rilasci accidentali.</td></tr>
+<tr><td>Review con modello differente</td><td><span class="rating-mid">Utile, non decisiva</span></td><td>Una seconda prospettiva può aiutare, ma non sostituisce verifiche oggettive.</td></tr>
+<tr><td>Più coding agent in parallelo</td><td><span class="rating-mid">Da misurare</span></td><td>Ha valore se i task sono indipendenti; introduce costi e conflitti.</td></tr>
+<tr><td>Software Factory autonoma</td><td><span class="rating-mid">Per contesti maturi</span></td><td>Richiede controllo su permessi, budget, log e integrazione.</td></tr>
+<tr><td>Harness personalizzato</td><td><span class="rating-mid">Solo se necessario</span></td><td>Il costo di manutenzione potrebbe superare i benefici.</td></tr>
+</tbody></table></div>
+<h3>Tre limiti da considerare</h3>
+<ol>
+<li><strong>Assenza di benchmark controllati.</strong> Il video mostra un metodo ed esempi pratici; non dimostra quanto migliori la produttività rispetto a un team tradizionale o a un singolo agente ben gestito.</li>
+<li><strong>Responsabilità e sicurezza.</strong> Una review AI o un report di audit non certificano la sicurezza né risolvono da soli eventuali obblighi legali. È necessario testare autorizzazioni, dati e infrastruttura.</li>
+<li><strong>Componente promozionale.</strong> L'autore presenta anche la propria community, corsi e progetti. Sono risorse potenzialmente utili, ma occorre separare i principi tecnici dalle proposte commerciali.</li>
+</ol>
+<p>In particolare, le macchine virtuali isolate possono limitare il danno di un processo, ma <strong>non sono una protezione assoluta</strong> contro accessi impropri a servizi esterni o segreti esposti.</p>
+
+<h2>2. Come applicare la roadmap senza creare complessità inutile</h2>
+<p>Per un singolo sviluppatore o un piccolo team suggerisco una progressione in quattro livelli. Ogni livello ha un criterio di uscita: si passa al successivo quando il precedente funziona davvero.</p>
+<section class="adoption-levels">
+<div class="adoption-level"><span>Livello 1</span><h3>Workflow affidabile</h3><p>Repository, README, <code>AGENTS.md</code>, issue con criteri di accettazione, feature branch e PR.</p><p><strong>Pronto quando:</strong> le modifiche non entrano in <code>main</code> senza una richiesta identificabile e una verifica.</p></div>
+<div class="adoption-level"><span>Livello 2</span><h3>Qualità automatizzata</h3><p>Build, test, lint e security scan in CI, controlli obbligatori e un processo di review.</p><p><strong>Pronto quando:</strong> una regressione introdotta intenzionalmente viene intercettata dalla pipeline.</p></div>
+<div class="adoption-level"><span>Livello 3</span><h3>Parallelismo mirato</h3><p>Due agenti su issue indipendenti, branch/worktree separati, budget massimo e review umana.</p><p><strong>Pronto quando:</strong> tempi e qualità migliorano senza crescita sproporzionata di conflitti e costi.</p></div>
+<div class="adoption-level"><span>Livello 4</span><h3>Orchestrazione</h3><p>Classificazione automatica delle issue, code review strutturate, log, ambienti isolati, controlli e approvazione finale.</p><p><strong>Pronto quando:</strong> il volume dei task giustifica realmente la gestione di una Software Factory.</p></div>
+</section>
+
+<h2>3. Un piano operativo realistico</h2>
+<div class="table-scroll"><table><thead><tr><th>Periodo indicativo</th><th>Attività</th><th>Deliverable</th></tr></thead><tbody>
+<tr><td>Settimana 1</td><td>Inventario stack, convenzioni e rischi; creare AGENTS.md.</td><td>Architettura breve e regole del repo.</td></tr>
+<tr><td>Settimana 2</td><td>Definire template issue/PR e primi test automatici.</td><td>Una PR verificata attraverso CI.</td></tr>
+<tr><td>Settimana 3</td><td>Introdurre una skill personale per implementazione e review; aggiungere controlli di sicurezza.</td><td>Procedura ripetibile con evidenze.</td></tr>
+<tr><td>Settimana 4</td><td>Misurare tempi, regressioni e costo di uno o due agenti in parallelo.</td><td>Decisione motivata sul livello di automazione.</td></tr>
+</tbody></table></div>
+<p>Le tempistiche sono illustrative: dipendono dall'esperienza, dalla copertura dei test e dalla complessità del prodotto. L'obiettivo non è «finire la roadmap in quattro settimane», ma mettere in piedi un ciclo di sviluppo che puoi ripetere.</p>
+<h3>Indicatori da osservare</h3>
+<ul>
+<li><strong>Lead time:</strong> tempo dall'apertura dell'issue a una PR integrata.</li>
+<li><strong>Regressioni:</strong> bug introdotti dopo il merge o il rilascio.</li>
+<li><strong>Review effort:</strong> tempo umano necessario per capire e approvare una modifica.</li>
+<li><strong>Costi effettivi:</strong> token, API, servizi cloud e tempo di integrazione.</li>
+<li><strong>Copertura dei requisiti:</strong> criteri di accettazione verificati, non semplicemente task dichiarati «completi».</li>
+</ul>
+
+<h2>4. Checklist di adozione</h2>
+<p>Usa questa lista come controllo di completamento prima di passare all'automazione successiva.</p>
+<ul class="article-checklist">
+<li>☐ Ho documentato stack, architettura e dipendenze essenziali.</li>
+<li>☐ Ho creato un file AGENTS.md conciso con convenzioni e limiti.</li>
+<li>☐ Ho una skill di implementazione e una di review che so modificare.</li>
+<li>☐ Ogni modifica significativa parte da una GitHub Issue verificabile.</li>
+<li>☐ Gli agenti lavorano su branch dedicati, non direttamente su main.</li>
+<li>☐ Le pull request contengono descrizione, test e rischi residui.</li>
+<li>☐ Build e test automatici si eseguono sulle pull request.</li>
+<li>☐ I controlli indispensabili sono obbligatori prima del merge.</li>
+<li>☐ I segreti e i permessi di accesso non sono affidati al solo prompt.</li>
+<li>☐ Prima di usare più agenti, misuro benefici, spesa e conflitti.</li>
+</ul>
+<p>Per iniziare senza dispersione, completa prima i punti relativi a issue, branch, PR e CI. Sono la base anche se in futuro cambierai provider AI.</p>
+
+<h2>5. Conclusione: l'AI Engineer non è una scorciatoia</h2>
+<p>Il valore del video non risiede tanto nelle demo con dieci agenti o nella fabbrica tridimensionale. Risiede nella disciplina proposta: <strong>trasformare la produzione di codice in un processo comprensibile, controllabile e ripetibile</strong>.</p>
+<p>Un buon coding agent accelera la scrittura del software; un buon processo garantisce che i risultati possano essere compresi, testati e mantenuti. Per questo partirei dai livelli 1 e 2, introducendo il parallelismo soltanto in presenza di lavoro realmente indipendente.</p>
+<div class="takeaway"><strong>Il principio finale</strong><p>Non chiederti soltanto se un agente può costruire una funzionalità. Chiediti come saprai che è corretta, chi approverà la modifica e come interverrai quando qualcosa non funziona.</p></div>
+
+<h2>6. Fonti e approfondimenti</h2>
+<ul>
+<li><a href="https://youtu.be/uD99aKV4fq8">Leon van Zyl — From Vibe Coder to AI Engineer: The Complete Roadmap</a>, AI Practitioners Summit 2026, video pubblicato il 26 ottobre 2026.</li>
+<li><a href="https://github.com/leonvanzyl/skills">Le skills pubblicate dall'autore</a>.</li>
+<li><a href="https://github.com/leonvanzyl/cubefarm">CubeFarm, progetto dimostrativo open source</a>.</li>
+<li><a href="https://docs.github.com/en/actions">Documentazione GitHub Actions</a> e <a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository">protezione dei branch</a>.</li>
+<li><a href="https://owasp.org/www-project-top-ten/">OWASP Top 10</a>, riferimento per rischi ricorrenti nelle applicazioni web.</li>
+</ul>
+<p class="source-foot"><strong>Nota metodologica:</strong> gli argomenti e i riferimenti temporali sono ricavati dalla trascrizione del video; valutazioni, esempi, checklist e piano operativo costituiscono un'elaborazione critica indipendente. Non si tratta di una certificazione di sicurezza o di una prova comparativa di performance.</p>
