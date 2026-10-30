@@ -78,12 +78,16 @@ Usa colori basati sulle variabili CSS `--bg`, `--panel`, `--panel2`, `--text`, `
 
 ## Favicon e icona del blog
 
-La favicon in stile blocco note è in `assets/icons/favicon.svg`. È già inclusa nel layout condiviso e compare automaticamente nelle pagine Markdown.
+Sono disponibili due favicon blocco note: `assets/icons/favicon.svg` (sfondo scuro) e `assets/icons/favicon-light.svg` (sfondo bianco). Il layout condiviso sceglie automaticamente la versione coerente con il tema, anche per il logo nella testata. La logica di selezione è in `assets/js/theme.js`.
 
 Per gli articoli HTML autonomi con `layout: null`, aggiungi nel `<head>` anche:
 
 ```html
-<link rel="icon" type="image/svg+xml" href="{{ '/assets/icons/favicon.svg' | relative_url }}">
+<link rel="icon" type="image/svg+xml"
+      data-theme-icon
+      data-dark-src="{{ '/assets/icons/favicon.svg' | relative_url }}"
+      data-light-src="{{ '/assets/icons/favicon-light.svg' | relative_url }}"
+      href="{{ '/assets/icons/favicon.svg' | relative_url }}">
 <meta name="theme-color" content="#0c1422">
 ```
 
