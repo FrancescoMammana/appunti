@@ -10,6 +10,17 @@
   <script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
   <link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  <link rel="manifest" href="{{ '/manifest.webmanifest' | relative_url }}">
+  <meta name="application-name" content="Appunti">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="apple-touch-icon" href="{{ '/assets/icons/icon-192.png' | relative_url }}">
+  {% if page.ai_coding %}
+  <link rel="stylesheet" href="{{ '/assets/css/ai-coding.css' | relative_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/report-theme.css' | relative_url }}">
+  <script defer src="{{ '/assets/js/ai-coding.js' | relative_url }}"></script>
+  {% endif %}
+  <script defer src="{{ '/assets/js/pwa.js' | relative_url }}"></script>
 </head>
 <body>
   <header class="site-header">
@@ -25,7 +36,7 @@
       </nav>
     </div>
   </header>
-  <main class="wrap">
+  <main class="wrap{% if page.wide_layout %} wrap-wide{% endif %}">
   {% if page.series_id %}
     {% assign chapters = site.posts | where: 'series_id', page.series_id | sort: 'series_order' %}
     {% assign previous_order = page.series_order | minus: 1 %}
@@ -77,6 +88,11 @@
     {{ content }}
   {% endif %}
   </main>
+  <div id="pwa-update" class="pwa-update" role="status" aria-live="polite" hidden>
+    <span>Una nuova versione di Appunti è disponibile.</span>
+    <button type="button" id="pwa-update-action">Aggiorna</button>
+    <button type="button" id="pwa-update-dismiss" aria-label="Chiudi avviso aggiornamento">×</button>
+  </div>
   <footer class="site-footer"><div class="wrap">Appunti · {{ 'now' | date: '%Y' }} · Pubblicato con GitHub Pages e Jekyll</div></footer>
 </body>
 </html>
