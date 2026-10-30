@@ -16,7 +16,8 @@ Blog statico pubblicabile con **GitHub Pages + Jekyll**, senza server o build lo
 - `assets/css/report-theme.css` — correzioni di contrasto per il report AI Coding in modalità chiara.
 - `assets/js/theme.js` — selettore Chiaro/Scuro con preferenza salvata nel browser.
 - `assets/css/style.css` — stile del blog.
-- `assets/icons/favicon.svg` — icona blocco note per la scheda del browser e il logo del sito.
+- `assets/icons/favicon.svg` — icona blocco note su sfondo scuro.
+- `assets/icons/favicon-light.svg` — variante su sfondo bianco per il tema chiaro.
 - `_config.yml` — impostazioni GitHub Pages.
 - `GUIDA-PUBBLICAZIONE.md` — guida per pubblicare dalla chat.
 
@@ -40,6 +41,6 @@ Non pubblicare credenziali o informazioni riservate: repository e sito sono pubb
 
 ## Modalità chiara e scura
 
-Il blog usa **tema scuro iniziale**, come nel progetto originale. Il pulsante **Tema chiaro / Tema scuro** compare nel menu di tutte le pagine Jekyll e nel report AI Coding. La scelta viene salvata in `localStorage` (`appunti-theme-v1`) e rimane attiva navigando tra le pagine e nelle visite successive con lo stesso browser. In modalità privata o con storage disabilitato la scelta funziona finché non si ricarica la pagina.
+Il logo del sito e la favicon del browser seguono automaticamente il tema scelto: sfondo scuro nel tema scuro, sfondo bianco nel tema chiaro. Il blog usa **tema scuro iniziale**, come nel progetto originale. Il pulsante **Tema chiaro / Tema scuro** compare nel menu di tutte le pagine Jekyll e nel report AI Coding. La scelta viene salvata in `localStorage` (`appunti-theme-v1`) e rimane attiva navigando tra le pagine e nelle visite successive con lo stesso browser. In modalità privata o con storage disabilitato la scelta funziona finché non si ricarica la pagina.
 
 Palette: `assets/css/theme.css`. Il layout principale importa `theme.js` prima dei CSS per evitare un flash del tema sbagliato. I report con `layout: null` devono importare esplicitamente entrambi e fornire il controllo di cambio tema; evita colori fissi e usa `var(--bg)`, `var(--panel)`, `var(--text)`, `var(--muted)`, `var(--accent)`, ecc. Il report AI Coding include un foglio CSS specifico per le parti non già basate su variabili.
