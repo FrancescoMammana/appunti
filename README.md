@@ -76,3 +76,17 @@ extra_js:
 ```
 
 Il corpo articolo deve contenere solo il markup della pagina (senza `<html>`, `<head>`, `<body>` o script duplicati). I file di stile sono caricati dal layout comune. In particolare il CSS del report AI Coding è isolato sotto `.ai-coding` per non modificare i componenti globali.
+
+### Invito all'installazione su smartphone (Issue #2)
+
+Il file `assets/js/install-prompt.js`, caricato dal layout condiviso, mostra un invito leggero in basso quando un browser mobile segnala `beforeinstallprompt`: **l'avviso non viene forzato** nei browser che non supportano tale evento, sui desktop o nelle app già aperte in modalità standalone.
+
+- **Installa** apre la finestra ufficiale di Chrome/Chromium, non installa niente senza conferma.
+- **Non ora** salva in `localStorage` la data/ora di scadenza (`appunti-install-dismiss-until`) e nasconde l'invito per **24 ore esatte**. La nuova occasione si presenta alla navigazione successiva, se il browser emette nuovamente l'evento.
+- Anche l'annullamento della finestra di installazione ufficiale applica 24 ore di pausa.
+- L'evento `appinstalled` chiude l'invito; il banner non appare quando la PWA è già aperta come applicazione.
+- Se è visibile l'avviso di aggiornamento, questo ha la precedenza.
+- Lo stile di `.pwa-install` usa le variabili CSS condivise, così segue il tema chiaro/scuro.
+- Su iPhone/iPad e browser senza `beforeinstallprompt` il banner non viene mostrato automaticamente: l'installazione manuale resta disponibile nei browser che la supportano.
+
+Il workflow `Validate Appunti PWA` esegue anche `.github/scripts/check-install-prompt.mjs`, un test senza librerie esterne con casi per mobile, desktop, standalone, installazione, rinvio di 24 ore, incompatibilità di storage e coesistenza con l'avviso di aggiornamento.
