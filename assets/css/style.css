@@ -138,3 +138,15 @@
 .pwa-install-later:hover{border-color:var(--accent)}
 .pwa-install-actions button:disabled{cursor:wait;opacity:.6}
 @media(max-width:600px){.pwa-install{bottom:12px;left:12px;right:12px;width:auto;max-width:440px;margin:auto}}
+
+/* Issue #6 — scheda di stato editoriale, coerente nei temi chiaro e scuro. */
+.prose .article-status{margin:24px 0 32px;padding:20px 24px;border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:14px;background:var(--panel);color:var(--text)}
+.prose .article-status-title{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 10px;font-weight:800;color:var(--text)}
+.prose .article-status-title span{font-size:13px;font-weight:600;color:var(--muted)}
+.prose .article-status p:last-child{margin-bottom:0;color:var(--body-text)}
+.prose .article-status strong{color:var(--text)}
+.prose a{overflow-wrap:anywhere}
+.prose table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse}
+.prose th,.prose td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+.prose th{background:var(--table-head-bg);color:var(--text)}
+@media(max-width:550px){.prose .article-status{padding:16px}}
