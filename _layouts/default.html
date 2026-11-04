@@ -79,8 +79,8 @@
         </ol>
       </details>
     </article>
-  {% elsif page.layout == 'post' %}
-    <article class="prose">
+  {% elsif page.layout == 'post' or page.article_style %}
+    <article class="prose{% if page.article_style %} binance-report{% endif %}">
       <div class="post-meta"><time>{{ page.date | date: '%d/%m/%Y' }}</time></div>
       <h1>{{ page.title | escape }}</h1>
       {% if page.description %}<p class="summary">{{ page.description }}</p>{% endif %}
