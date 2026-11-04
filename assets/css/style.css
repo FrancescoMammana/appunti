@@ -138,3 +138,36 @@
 .pwa-install-later:hover{border-color:var(--accent)}
 .pwa-install-actions button:disabled{cursor:wait;opacity:.6}
 @media(max-width:600px){.pwa-install{bottom:12px;left:12px;right:12px;width:auto;max-width:440px;margin:auto}}
+
+/* Issue #8 — articolo Binance: gerarchia editoriale e leggibilità coerenti fra i temi. */
+.binance-report{max-width:820px;line-height:1.82}
+.binance-report h1{line-height:1.18;overflow-wrap:break-word}
+.binance-report h2{margin:43px 0 14px;line-height:1.32;letter-spacing:-.5px}
+.binance-report h3{margin:30px 0 10px;line-height:1.38}
+.binance-report p,.binance-report li{color:var(--body-text)}
+.binance-report p{margin:14px 0 18px}
+.binance-report ul,.binance-report ol{padding-left:25px}
+.binance-report li{margin:7px 0}
+.binance-report a{text-underline-offset:3px;overflow-wrap:anywhere}
+.binance-report a:hover{color:var(--accent-hover)}
+.binance-report strong{color:var(--text)}
+.binance-report table{display:block;max-width:100%;overflow-x:auto;border:1px solid var(--border);border-radius:13px;border-collapse:separate;border-spacing:0;margin:22px 0;background:var(--panel);-webkit-overflow-scrolling:touch}
+.binance-report th,.binance-report td{text-align:left;vertical-align:top;padding:12px 14px;border-bottom:1px solid var(--border);font-size:14px;line-height:1.55}
+.binance-report th{color:var(--text);background:var(--table-head-bg);font-weight:750;white-space:nowrap}
+.binance-report td{color:var(--body-text)}
+.binance-report tr:last-child td{border-bottom:0}
+.binance-report td code{overflow-wrap:anywhere;word-break:break-all}
+.binance-report .summary{color:var(--muted);font-size:18px;line-height:1.7}
+.binance-report .binance-status{margin:26px 0 38px;border:1px solid var(--border);border-radius:16px;background:var(--panel);overflow:hidden;box-shadow:0 8px 24px var(--shadow)}
+.binance-report .binance-status-header{padding:17px 22px 14px;border-bottom:1px solid var(--border);background:var(--panel2)}
+.binance-report .binance-status h2{margin:0;color:var(--text);font-size:19px;letter-spacing:-.3px;line-height:1.35}
+.binance-report .binance-status .binance-status-revision{margin:5px 0 0;color:var(--muted);font-size:13px;line-height:1.5}
+.binance-report .binance-status>p{margin:0;padding:18px 22px;font-size:15px;line-height:1.7;color:var(--body-text)}
+@media(max-width:600px){
+ .binance-report{padding-top:34px}
+ .binance-report h2{margin-top:34px;font-size:23px}
+ .binance-report table{margin:18px 0}
+ .binance-report th,.binance-report td{padding:10px 12px;font-size:13px}
+ .binance-report .binance-status-header{padding:15px 17px 12px}
+ .binance-report .binance-status>p{padding:15px 17px}
+}
