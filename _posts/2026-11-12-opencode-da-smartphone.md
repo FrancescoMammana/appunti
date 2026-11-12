@@ -1,143 +1,254 @@
 ---
 article_layout: true
-title: "OpenCode da smartphone: una proposta per sviluppare con l'AI ovunque"
+title: "OpenCode da smartphone: guida pratica con VPS Linux e Android"
 date: 2026-11-12 18:00:00 +0100
-description: "Un'architettura proposta per usare OpenCode da Android con una VPS Linux, un client grafico e una connessione privata."
+description: "Configurare OpenCode su una VPS Linux e usarlo da Android: comandi, Tailscale, GitHub, systemd, sicurezza e verifiche."
 categories: [guide, ai-coding]
 tags: [opencode, android, linux, github, tailscale, coding-agent]
 ---
 
-# OpenCode da smartphone: una proposta per sviluppare con l'AI ovunque
+# OpenCode da Android con una VPS Linux
 
-**Si può davvero sviluppare software usando soltanto uno smartphone?** Per alcune attività, sì. Non occorre però far girare tutti gli strumenti sul telefono: si può lasciare il lavoro a un server Linux e usare Android per parlare con l'agente AI, seguire le modifiche e approvarle. È un modo pratico per intervenire su un progetto anche quando non si ha un computer davanti.
+**Obiettivo:** scrivere richieste, esaminare modifiche, eseguire test e lavorare su repository Git da Android, lasciando compilazione e strumenti di sviluppo su una VPS Linux.
 
-L'idea è usare **OpenCode** come assistente di programmazione su un server remoto e collegarsi con un'app Android. Questa è una proposta da valutare e provare, non una configurazione già collaudata: prima di iniziare bisogna verificare che server e app siano compatibili.
+Questa è una **procedura proposta**, non un'installazione verificata end-to-end su uno specifico telefono o server. I comandi OpenCode fanno riferimento alla **CLI V2 documentata al momento della stesura**: prima di applicarli, controllare `opencode --version` e `opencode serve --help`. Per iniziare, **il browser Android è sufficiente**: un client Android dedicato è opzionale.
 
-## L'idea in breve
+## 1. Architettura
 
 ```text
-Smartphone Android
-  └─ Client grafico compatibile con OpenCode
-       └─ VPN privata (Tailscale)
-            └─ VPS Linux
-                 ├─ OpenCode (servizio/API)
-                 ├─ Git e GitHub CLI
-                 ├─ SDK, runtime e strumenti di test
-                 └─ Repository di sviluppo
+Android (browser / client OpenCode)
+    │
+    └── Tailscale: rete privata cifrata
+            │
+            └── VPS Linux
+                  ├── Tailscale Serve (HTTPS privato)
+                  ├── OpenCode API + Web UI (127.0.0.1:4096)
+                  ├── Git + GitHub CLI
+                  └── ~/projects/<repository>
 ```
 
-**Il vantaggio è semplice:** il server esegue i comandi e conserva i progetti; lo smartphone permette di seguirne il lavoro ovunque ci sia una connessione.
+Il server OpenCode ascolta **solo su localhost**. Tailscale Serve pubblica l'interfaccia **solo nella tailnet**: non è necessario aprire la porta 4096 sul firewall pubblico. Non utilizzare Tailscale Funnel per questo caso.
 
-## Perché non eseguire tutto sul telefono?
+## 2. Prerequisiti
 
-Su Android esistono terminali come Termux, ma installare e mantenere tutti gli strumenti di sviluppo su un telefono può diventare scomodo. Una VPS, cioè un server virtuale sempre raggiungibile, offre un ambiente Linux in cui installare compilatori, librerie e strumenti di test. Anche i repository rimangono sul server, senza dover copiare ogni volta i file sul telefono.
+| Componente | Requisito |
+| --- | --- |
+| VPS | Ubuntu/Debian aggiornati, accesso SSH con chiave; indicativamente 2 vCPU e 4 GB RAM per attività leggere |
+| Android | Browser moderno e app Tailscale |
+| Modello AI | Provider e credenziali configurati in OpenCode; il costo del modello è separato dalla VPS |
+| GitHub | Account con accesso ai repository da gestire |
+| Sicurezza | Utente Linux non-root, aggiornamenti, firewall, autenticazione OpenCode |
 
-Ci sono naturalmente dei limiti: serve Internet, bisogna mantenere aggiornato il server e il modello AI può avere un costo. Inoltre, leggere modifiche molto estese su uno schermo piccolo non è sempre comodo.
+I comandi seguenti assumono una distribuzione Debian/Ubuntu e un utente Linux normale con `sudo`.
 
-## I componenti proposti
+## 3. Preparare la VPS
 
-| Componente | Ruolo | Nota |
-| --- | --- | --- |
-| **OpenCode** | Agente AI che legge e modifica il progetto | Verificare versione, provider e API disponibili |
-| **VPS Linux** | Ambiente in cui girano codice e test | Preferibile un utente non privilegiato |
-| **Client Android** | Conversazioni, diff e approvazioni | Verificare che supporti il server scelto |
-| **Tailscale** | Rete privata tra telefono e VPS | Evita di esporre direttamente il servizio |
-| **Git + GitHub CLI** | Branch, issue, commit e pull request | Credenziali con privilegi minimi |
-| **systemd** | Avvio del server dopo un riavvio | Non garantisce la ripresa dei task interrotti |
+Accedere via SSH, aggiornare i pacchetti e installare gli strumenti di base:
 
-Un client grafico di terze parti può risultare più pratico di SSH per conversazioni e approvazioni. Va però valutato anche sotto il profilo di affidabilità, manutenzione e trattamento dei dati. Se il client non è compatibile, si può usare un'interfaccia web supportata dalla propria versione di OpenCode oppure un terminale SSH.
+```bash
+ssh utente@IP_DELLA_VPS
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y curl git ca-certificates gh
+mkdir -p ~/projects
+```
 
-## Come si potrebbe configurare
+**Non eseguire OpenCode come root.** Installare anche SDK e runtime necessari al proprio progetto (.NET, Node.js, Python ecc.). La VPS deve poter eseguire davvero build e test: OpenCode non sostituisce questi strumenti.
 
-### 1. Preparare l'ambiente Linux
+## 4. Installare OpenCode V2
 
-Scegliere una VPS con Ubuntu o Debian aggiornati e installare Git, strumenti di compilazione e i runtime necessari ai progetti. Due vCPU e 4 GB di RAM possono essere un punto di partenza per attività leggere; build e test impegnativi richiederanno risorse maggiori.
+La documentazione ufficiale V2 indica questo installer:
 
-Creare un utente dedicato allo sviluppo, evitare l'esecuzione come root e configurare accesso SSH con chiavi e aggiornamenti di sicurezza.
+```bash
+curl -fsSL https://opencode.ai/v2/install | bash
+```
 
-### 2. Installare OpenCode
+Prima di eseguire script remoti, verificarne origine e contenuto. Aprire una nuova shell se il comando `opencode` non è ancora nel `PATH`, quindi controllare:
 
-Seguire la [documentazione ufficiale di OpenCode](https://opencode.ai/docs/) per la versione corrente. Verificare il comando di installazione prima di eseguirlo: URL e opzioni della CLI possono cambiare tra release.
+```bash
+opencode --version
+opencode serve --help
+```
 
-Dopo l'installazione, controllare la versione e configurare il provider del modello AI. **L'utilizzo del modello può comportare costi separati** dal canone della VPS; conviene definire limiti e controlli di spesa.
+Configurare il provider AI seguendo la [guida ufficiale](https://opencode.ai/docs/). Non salvare chiavi API nei repository Git.
 
-### 3. Rendere raggiungibile il servizio senza pubblicarlo su Internet
+## 5. Avviare il server solo in locale
 
-Installare [Tailscale](https://tailscale.com/kb/1031/install-linux) sia sulla VPS sia su Android, autorizzando entrambi i dispositivi nella stessa rete privata.
+Per una prova iniziale, avviare OpenCode in primo piano:
 
-Il principio di sicurezza è mantenere il servizio OpenCode in ascolto sull'interfaccia locale e, se supportato dalla configurazione, pubblicarlo all'interno della tailnet tramite [Tailscale Serve](https://tailscale.com/kb/1312/serve). Non usare **Funnel**, che è pensato per l'esposizione pubblica.
+```bash
+cd ~/projects
+opencode serve --hostname 127.0.0.1 --port 4096
+```
 
-Prima di procedere, verificare che il client Android supporti l'URL, il protocollo e l'autenticazione del server OpenCode. Una VPN **non sostituisce** l'autenticazione applicativa né le regole di accesso della tailnet.
+La CLI V2 espone API e interfaccia web sullo stesso server. L'accesso richiede una password: per un servizio persistente conviene impostarne una **fissa e robusta** tramite `OPENCODE_PASSWORD`, senza scriverla nella cronologia della shell.
 
-### 4. Collegare l'app grafica Android
+Per verificare il processo da una seconda sessione SSH:
 
-Installare un client Android compatibile e configurare una connessione manuale all'indirizzo privato del server. Se il client e il server supportano una procedura di pairing, può essere preferibile all'inserimento manuale delle credenziali.
+```bash
+curl -I http://127.0.0.1:4096
+```
 
-Eseguire una prova semplice: aprire un progetto, avviare una conversazione, richiedere una piccola modifica e controllare il diff prima di approvarla.
+Una risposta HTTP (anche di autenticazione) conferma che la porta risponde; non dimostra ancora che l'intera configurazione funzioni.
 
-### 5. Collegare GitHub
+## 6. Installare Tailscale sulla VPS
 
-Installare [GitHub CLI](https://cli.github.com/) sulla VPS, autenticarsi con un account autorizzato e clonare soltanto i repository necessari.
+Seguire le [istruzioni ufficiali Linux](https://tailscale.com/kb/1031/install-linux) e verificare il comando di installazione prima di lanciarlo. La procedura ufficiale comunemente indicata è:
 
-Per le modifiche assistite dall'agente è utile un processo ripetibile:
+```bash
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up
+tailscale status
+```
 
-**Issue → Branch → Modifica → Test → Pull request → Revisione → Merge**
+Autorizzare il dispositivo nella propria tailnet. Installare Tailscale anche su Android e accedere **allo stesso account/tailnet**.
 
-Le istruzioni persistenti del repository, ad esempio nel file `AGENTS.md`, possono indicare convenzioni di codice, test obbligatori e limiti alle operazioni automatiche. Non consentire merge, deploy o comandi distruttivi senza un controllo adeguato.
+Pubblicare il servizio locale **solo nella rete privata**:
 
-## Persistenza: tre aspetti distinti
+```bash
+sudo tailscale serve --bg 4096
+tailscale serve status
+```
 
-**Disponibilità del server.** Un servizio gestito da `systemd` può avviarsi automaticamente con Linux. Il comando e la modalità di supervisione dipendono dalla versione installata di OpenCode: conviene usare un processo in primo piano quando è disponibile, così `systemd` può monitorarlo e riavviarlo.
+Il comando mostra l'indirizzo HTTPS della VPS nella tailnet (tipicamente un dominio `*.ts.net`). **Usare l'URL effettivamente restituito**, non un indirizzo inventato. La sintassi di Tailscale Serve può cambiare: se `--bg` non è disponibile, consultare `tailscale serve --help`.
 
-**Conversazioni recuperabili.** La cronologia deve essere salvata sul server, non soltanto nell'app. Occorre verificare il percorso dati della versione utilizzata e includerlo nei backup.
+**Da non fare:** impostare `opencode serve --hostname 0.0.0.0` senza una precisa ragione e adeguate restrizioni; aprire la porta 4096 verso Internet; usare `tailscale funnel`.
 
-**Attività ancora in esecuzione.** Salvare una conversazione non significa che un test o un comando continui dopo il riavvio della VPS. Per le attività lunghe servono meccanismi di esecuzione e recupero appropriati; `tmux` può aiutare contro le disconnessioni SSH, ma non contro il riavvio del sistema.
+## 7. Collegarsi da Android
 
-## Sicurezza e manutenzione
+1. Attivare Tailscale sul telefono.
+2. Aprire nel browser Android l'URL HTTPS privato ottenuto con `tailscale serve status`.
+3. Eseguire il pairing/autenticazione richiesti da OpenCode.
+4. Aprire una sessione e verificare l'accesso al progetto.
 
-Prima di considerare pronta la soluzione:
+Per generare un collegamento di accesso temporaneo, OpenCode V2 documenta:
 
-- Non esporre direttamente le porte di OpenCode su Internet.
-- Applicare autenticazione, permessi minimi e restrizioni Tailscale.
-- Tenere chiavi API e token GitHub fuori dai repository e dai log.
-- Esaminare i diff e richiedere approvazione per operazioni rischiose.
-- Aggiornare sistema operativo, OpenCode e client mobile.
-- Eseguire backup cifrati di configurazioni, dati delle sessioni e modifiche locali non ancora pubblicate.
-- Verificare provenienza, aggiornamenti e permessi del client Android di terze parti.
+```bash
+opencode pair
+```
 
-Un agente AI può eseguire comandi con i permessi dell'utente Linux che lo ospita. La VPS andrebbe quindi trattata come un ambiente di sviluppo con accessi controllati, non come un servizio pubblico aperto.
+Il collegamento standard punta a localhost. Per generare un link che utilizzi l'URL della tailnet, la CLI V2 documenta anche:
 
-## Test prima dell'uso quotidiano
+```bash
+opencode pair --url https://NOME-VPS.NOME-TAILNET.ts.net
+```
 
-1. Collegarsi da Android con Tailscale attivo.
-2. Aprire un repository e richiedere una modifica innocua.
-3. Controllare il diff e avviare i test.
-4. Chiudere e riaprire l'app, verificando la cronologia.
-5. Passare da Wi-Fi a rete mobile.
-6. Riavviare la VPS e verificare la disponibilità del servizio.
-7. Disattivare Tailscale e verificare che l'endpoint privato non sia raggiungibile dalla rete pubblica.
-8. Ripristinare un backup di prova.
+Sostituire il dominio con quello mostrato da Tailscale. I link di pairing sono monouso e scadono dopo pochi minuti. Se si preferisce un client Android dedicato, verificare che sia **compatibile con la versione V2** e che gestisca autenticazione e URL privato; non è un requisito della procedura.
 
-## Alternative da considerare
+## 8. Rendere OpenCode persistente con systemd
 
-**Interfaccia web ufficiale.** Riduce la dipendenza da un client Android di terze parti, purché la versione installata la supporti e sia accessibile in modo sicuro.
+Una sessione SSH chiusa termina normalmente un processo in primo piano. Per l'uso quotidiano creare un servizio **utente**. Prima individuare il binario:
 
-**SSH + terminale.** Offre il massimo controllo e richiede meno integrazioni, ma la revisione dei diff su uno schermo piccolo è meno comoda.
+```bash
+command -v opencode
+```
 
-**PC sempre acceso anziché VPS.** Riduce il costo di un server dedicato, ma dipende dall'alimentazione e dalla connettività della macchina domestica.
+L'esempio seguente usa `/home/utente/.opencode/bin/opencode` **solo come segnaposto**: sostituirlo con il percorso effettivo stampato dal comando precedente.
 
-## Valutazione finale
+Creare una directory per i segreti, accessibile solo all'utente:
 
-Questa architettura è interessante per chi vuole **seguire lo sviluppo da smartphone senza rinunciare a un vero ambiente Linux**. È particolarmente adatta a piccole modifiche, review, gestione delle issue e supervisione di agenti AI.
+```bash
+mkdir -p ~/.config/opencode
+chmod 700 ~/.config/opencode
+nano ~/.config/opencode/server.env
+```
 
-Non sostituisce completamente una workstation: per refactoring complessi, debugging visuale e analisi di grandi diff, un monitor e un IDE tradizionale rimangono spesso più comodi.
+Contenuto del file (sostituire la password):
 
-**La strada più prudente è un progetto pilota:** VPS isolata, connessione privata, un repository di prova, una piccola modifica e un ciclo completo di test e revisione. Solo dopo aver verificato stabilità, sicurezza e compatibilità conviene estendere la soluzione ad altri progetti.
+```ini
+OPENCODE_PASSWORD=INSERIRE_PASSWORD_LUNGA_E_CASUALE
+```
 
-### Risorse
+Proteggere il file:
 
-- [OpenCode — documentazione](https://opencode.ai/docs/)
+```bash
+chmod 600 ~/.config/opencode/server.env
+mkdir -p ~/.config/systemd/user
+nano ~/.config/systemd/user/opencode.service
+```
+
+Unità systemd:
+
+```ini
+[Unit]
+Description=OpenCode server privato
+
+[Service]
+Type=simple
+WorkingDirectory=%h/projects
+EnvironmentFile=%h/.config/opencode/server.env
+ExecStart=/PERCORSO/REALE/opencode serve --hostname 127.0.0.1 --port 4096
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
+```
+
+**Sostituire `/PERCORSO/REALE/opencode`** con il percorso assoluto ottenuto da `command -v opencode`. Poi:
+
+```bash
+systemctl --user daemon-reload
+systemctl --user enable --now opencode
+systemctl --user status opencode
+journalctl --user -u opencode -n 50 --no-pager
+```
+
+Per mantenere il servizio utente attivo dopo il logout e all'avvio della VPS, un amministratore può abilitare il lingering per l'utente:
+
+```bash
+sudo loginctl enable-linger "$USER"
+```
+
+**Attenzione:** systemd riavvia il server, ma non riprende automaticamente una build interrotta dal reboot. Sessioni e repository vanno inclusi nei backup.
+
+## 9. Collegare GitHub e lavorare su un repository
+
+Sulla VPS:
+
+```bash
+gh auth login
+gh auth status
+cd ~/projects
+gh repo clone ORGANIZZAZIONE/REPOSITORY
+cd REPOSITORY
+git status
+```
+
+Sostituire `ORGANIZZAZIONE/REPOSITORY` con un repository autorizzato. Per un flusso di lavoro controllabile:
+
+```bash
+gh issue create --title "Descrivere la modifica" --body "Obiettivo e criteri di verifica"
+git switch -c fix/nome-modifica
+# Richiedere a OpenCode una modifica circoscritta
+git diff --check
+git diff
+# Eseguire i test previsti dal progetto
+git add .
+git commit -m "fix: descrizione della modifica"
+git push -u origin fix/nome-modifica
+gh pr create --fill
+```
+
+La sequenza è un esempio: il comando dei test dipende dal progetto. **Issue → branch → modifica → test → PR → revisione → merge**. Evitare credenziali con privilegi superiori al necessario e non automatizzare merge o comandi distruttivi senza approvazione.
+
+## 10. Verifica finale e problemi comuni
+
+| Sintomo | Controllo |
+| --- | --- |
+| URL privato irraggiungibile | Tailscale attivo su entrambi; `tailscale status` e `tailscale serve status` |
+| Server non risponde | `systemctl --user status opencode`, `journalctl --user -u opencode` |
+| Accesso negato | Password, pairing, sessione e compatibilità V2 |
+| La pagina funziona solo via SSH | Verificare Serve e l'URL HTTPS della tailnet |
+| I test falliscono | Installare SDK/runtime del progetto sulla VPS |
+| Dopo un riavvio la sessione non esegue più il task | Il riavvio del servizio non ripristina i processi interrotti |
+
+**Checklist di collaudo:** accesso da Android su Wi-Fi e rete mobile; apertura progetto; modifica innocua; diff; test; chiusura e riapertura browser; reboot VPS; verifica che senza Tailscale l'URL privato non sia raggiungibile; ripristino di un backup di prova.
+
+## Riferimenti ufficiali
+
+- [OpenCode V2 — installazione](https://opencode.ai/docs/)
+- [OpenCode V2 — Web e pairing](https://opencode.ai/docs/cli/web/)
+- [OpenCode V2 — comandi CLI](https://opencode.ai/docs/cli/commands)
 - [Tailscale — installazione Linux](https://tailscale.com/kb/1031/install-linux)
-- [Tailscale Serve](https://tailscale.com/kb/1312/serve)
+- [Tailscale Serve — documentazione](https://tailscale.com/docs/reference/tailscale-cli/serve)
 - [GitHub CLI](https://cli.github.com/)
-- [GitHub — sicurezza dei token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure)
