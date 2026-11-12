@@ -171,3 +171,31 @@
  .binance-report .binance-status-header{padding:15px 17px 12px}
  .binance-report .binance-status>p{padding:15px 17px}
 }
+
+
+/* Issue #12 — contenuti tecnici lunghi: nessuno scroll laterale della pagina.
+   Lo scroll, quando serve, resta confinato al singolo blocco. */
+@media (max-width: 650px) {
+  main.wrap { min-width: 0; }
+  main.wrap > .prose, main.wrap > .binance-report { min-width: 0; max-width: 100%; }
+  main.wrap > pre, main.wrap > .prose pre, main.wrap > .binance-report pre {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre;
+    -webkit-overflow-scrolling: touch;
+  }
+  main.wrap > table, main.wrap > .prose table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  main.wrap :is(p, li, td, th, blockquote, a, code):not(pre code) {
+    overflow-wrap: anywhere;
+  }
+  .binance-report :is(code, a, td, li, p) {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+}
