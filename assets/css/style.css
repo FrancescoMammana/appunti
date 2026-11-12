@@ -199,3 +199,24 @@
     word-break: normal;
   }
 }
+
+
+/* Issue #14 — Jekyll/Kramdown può annidare i blocchi fenced in wrapper
+   .highlighter-rouge > .highlight > pre: lo scroll deve restare nel blocco. */
+@media (max-width: 650px) {
+  main.wrap > :is(.highlighter-rouge, .highlight),
+  main.wrap > :is(.highlighter-rouge, .highlight) > .highlight {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+  }
+  main.wrap > :is(.highlighter-rouge, .highlight) pre {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    white-space: pre;
+    -webkit-overflow-scrolling: touch;
+  }
+}
