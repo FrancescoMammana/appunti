@@ -8,9 +8,9 @@ tags: [opencode, android, linux, github, tailscale, coding-agent]
 
 # OpenCode da smartphone: una proposta per sviluppare con l'AI ovunque
 
-**È possibile usare un coding agent da uno smartphone senza trasformare il telefono in una workstation?** Una soluzione interessante è separare l'interfaccia dall'ambiente di esecuzione: il telefono serve per dialogare con l'agente e approvare le modifiche, mentre un server Linux si occupa del codice, dei test e dei comandi.
+**Si può davvero sviluppare software usando soltanto uno smartphone?** Per alcune attività, sì. Non occorre però far girare tutti gli strumenti sul telefono: si può lasciare il lavoro a un server Linux e usare Android per parlare con l'agente AI, seguire le modifiche e approvarle. È un modo pratico per intervenire su un progetto anche quando non si ha un computer davanti.
 
-Quella che segue è una **proposta architetturale**, non il resoconto di un'installazione verificata. Prima di adottarla occorre controllare la compatibilità tra la versione di OpenCode, il client Android scelto e le relative modalità di autenticazione.
+L'idea è usare **OpenCode** come assistente di programmazione su un server remoto e collegarsi con un'app Android. Questa è una proposta da valutare e provare, non una configurazione già collaudata: prima di iniziare bisogna verificare che server e app siano compatibili.
 
 ## L'idea in breve
 
@@ -25,13 +25,13 @@ Smartphone Android
                  └─ Repository di sviluppo
 ```
 
-**Il vantaggio:** il lavoro pesante si svolge sul server. Lo smartphone è il telecomando di un ambiente di sviluppo persistente, raggiungibile anche fuori casa.
+**Il vantaggio è semplice:** il server esegue i comandi e conserva i progetti; lo smartphone permette di seguirne il lavoro ovunque ci sia una connessione.
 
 ## Perché non eseguire tutto sul telefono?
 
-Android può ospitare strumenti da terminale, ad esempio tramite Termux, ma una VPS offre un ambiente Linux più prevedibile per compilazioni, dipendenze, container e processi lunghi. Permette inoltre di mantenere i repository in un unico posto, senza doverli sincronizzare continuamente con il dispositivo mobile.
+Su Android esistono terminali come Termux, ma installare e mantenere tutti gli strumenti di sviluppo su un telefono può diventare scomodo. Una VPS, cioè un server virtuale sempre raggiungibile, offre un ambiente Linux in cui installare compilatori, librerie e strumenti di test. Anche i repository rimangono sul server, senza dover copiare ogni volta i file sul telefono.
 
-Il compromesso è evidente: servono una connessione di rete, un server da mantenere e un modello AI configurato. La latenza e l'usabilità di un piccolo schermo possono limitare la revisione di modifiche complesse.
+Ci sono naturalmente dei limiti: serve Internet, bisogna mantenere aggiornato il server e il modello AI può avere un costo. Inoltre, leggere modifiche molto estese su uno schermo piccolo non è sempre comodo.
 
 ## I componenti proposti
 
@@ -88,9 +88,9 @@ Le istruzioni persistenti del repository, ad esempio nel file `AGENTS.md`, posso
 
 **Disponibilità del server.** Un servizio gestito da `systemd` può avviarsi automaticamente con Linux. Il comando e la modalità di supervisione dipendono dalla versione installata di OpenCode: conviene usare un processo in primo piano quando è disponibile, così `systemd` può monitorarlo e riavviarlo.
 
-**Cronologia delle conversazioni.** Le sessioni devono essere conservate nello storage del server, non soltanto nell'app. Occorre verificare il percorso dati della versione utilizzata e includerlo nei backup.
+**Conversazioni recuperabili.** La cronologia deve essere salvata sul server, non soltanto nell'app. Occorre verificare il percorso dati della versione utilizzata e includerlo nei backup.
 
-**Lavori in corso.** Una sessione salvata non significa che una build o un comando sopravviva a un riavvio della VPS. Per le attività lunghe servono meccanismi di esecuzione e recupero appropriati; `tmux` può aiutare contro le disconnessioni SSH, ma non contro il riavvio del sistema.
+**Attività ancora in esecuzione.** Salvare una conversazione non significa che un test o un comando continui dopo il riavvio della VPS. Per le attività lunghe servono meccanismi di esecuzione e recupero appropriati; `tmux` può aiutare contro le disconnessioni SSH, ma non contro il riavvio del sistema.
 
 ## Sicurezza e manutenzione
 
