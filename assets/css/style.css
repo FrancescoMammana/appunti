@@ -199,3 +199,9 @@
     word-break: normal;
   }
 }
+
+/* Issue #16 — blocchi tecnici contenuti nel layout articolo. */
+.prose {min-width:0;}
+.prose pre {display:block;max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.prose table {max-width:100%;}
+@media(max-width:650px){.prose table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}}
