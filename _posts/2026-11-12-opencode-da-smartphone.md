@@ -1,4 +1,5 @@
 ---
+article_layout: true
 title: "OpenCode da smartphone: una proposta per sviluppare con l'AI ovunque"
 date: 2026-11-12 18:00:00 +0100
 description: "Un'architettura proposta per usare OpenCode da Android con una VPS Linux, un client grafico e una connessione privata."
