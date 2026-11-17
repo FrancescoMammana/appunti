@@ -20,7 +20,7 @@ Blog statico pubblicabile con **GitHub Pages + Jekyll**, senza server o build lo
 - `assets/icons/favicon-light.svg` — variante su sfondo bianco per il tema chiaro.
 - `_config.yml` — impostazioni GitHub Pages.
 - `GUIDA-PUBBLICAZIONE.md` — guida per pubblicare dalla chat.
-- `REGOLE-SVILUPPO.md` — regole di lavoro: branch, pull request, merge, stile degli articoli e aggiornamento della documentazione.
+- `AGENTS.md` — regole di lavoro: branch, pull request, merge, stile degli articoli e aggiornamento della documentazione. È il file che gli agenti di coding leggono automaticamente.
 
 ## Pubblicazione iniziale con GitHub Pages
 
@@ -38,7 +38,7 @@ Non pubblicare credenziali o informazioni riservate: repository e sito sono pubb
 
 ## Regole di lavoro
 
-Ogni modifica passa da un branch e da una pull request, mai direttamente su `main`. Il giro completo (branch, commit, PR, squash merge, eliminazione del branch), i vincoli sulle date di pubblicazione e il divieto di modificare design e classi CSS per un singolo articolo sono descritti in [`REGOLE-SVILUPPO.md`](REGOLE-SVILUPPO.md).
+Ogni modifica passa da un branch e da una pull request, mai direttamente su `main`. Il giro completo (branch, commit, PR, squash merge, eliminazione del branch), i vincoli sulle date di pubblicazione e il divieto di modificare design e classi CSS per un singolo articolo sono descritti in [`AGENTS.md`](AGENTS.md).
 
 ## Prima serie di approfondimento
 
