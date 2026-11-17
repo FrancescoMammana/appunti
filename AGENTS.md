@@ -2,6 +2,8 @@
 
 Regole da seguire per ogni modifica al repository Appunti, sia che la faccia una persona sia che la faccia un agente AI. Valgono per articoli nuovi, correzioni, documentazione e configurazione.
 
+Il file si chiama `AGENTS.md` perché è il nome che OpenCode e altri agenti di coding leggono automaticamente all'inizio di ogni sessione: le regole qui sotto vengono quindi applicate senza doverle citare a mano.
+
 ## 1. Flusso di lavoro obbligatorio
 
 Nessuna modifica va scritta direttamente su `main`. Ogni cambiamento segue questo giro:
@@ -110,7 +112,7 @@ Le tabelle Markdown sono già scrollabili orizzontalmente con `article_style: tr
 - `README.md` va aggiornato **quando cambia qualcosa che descrive**: struttura del repository, nuovi file di progetto, flusso di pubblicazione, PWA, temi.
 - Non serve aggiornarlo per ogni nuovo articolo: home, indice e Service Worker si rigenerano da soli.
 - `GUIDA-PUBBLICAZIONE.md` va aggiornato quando cambia il modo di pubblicare o il layout condiviso.
-- Queste regole valgono anche per la documentazione: modifiche a `README.md`, `GUIDA-PUBBLICAZIONE.md` e `REGOLE-SVILUPPO.md` passano da branch e PR.
+- Queste regole valgono anche per la documentazione: modifiche a `README.md`, `GUIDA-PUBBLICAZIONE.md` e `AGENTS.md` passano da branch e PR.
 
 ## 5. Verifiche prima della pull request
 
