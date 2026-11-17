@@ -1,7 +1,7 @@
 ---
 article_style: true
 title: "Le migliori alternative a OpenRouter (2026): prezzi, abbonamenti e modelli gratis"
-date: 2026-11-18 12:00:00 +0100
+date: 2026-11-18 00:20:00 +0100
 description: "Confronto aggiornato dei router LLM tipo OpenRouter: quanto costano davvero, quali abbonamenti esistono e quali modelli gratuiti sono utilizzabili senza sorprese."
 categories: [guide, intelligenza-artificiale]
 tags: [openrouter, llm, api, prezzi, ai-gateway]
